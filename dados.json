@@ -1,0 +1,58 @@
+{
+  "empresa": "Nobs",
+  "atualizado_em": "2026-03-24T10:30:00",
+
+  "vendas": {
+    "meta_mensal": 150000,
+    "realizado_mes": 112400,
+    "contratos_hoje": 4,
+    "contratos_mes": 38,
+    "ticket_medio": 2958,
+    "ranking": [
+      { "nome": "Juliana M.", "valor": 31200, "contratos": 11 },
+      { "nome": "Rafael S.", "valor": 28750, "contratos": 9 },
+      { "nome": "Arthur P.", "valor": 24100, "contratos": 8 },
+      { "nome": "Camila R.", "valor": 18350, "contratos": 7 },
+      { "nome": "Diego L.", "valor": 10000, "contratos": 3 }
+    ],
+    "destaque_dia": {
+      "nome": "Juliana M.",
+      "motivo": "Fechou 2 contratos antes das 10h"
+    }
+  },
+
+  "noticias": [
+    {
+      "titulo": "STJ reafirma direito à revisão de contribuições previdenciárias pagas a mais",
+      "fonte": "Valor Econômico"
+    },
+    {
+      "titulo": "INSS anuncia novo prazo para revisão de benefícios previdenciários",
+      "fonte": "Folha de S.Paulo"
+    },
+    {
+      "titulo": "Médicos são o grupo com maior índice de concomitância em contribuições ao INSS",
+      "fonte": "CFM Notícias"
+    }
+  ],
+
+  "frases": [
+    { "texto": "O médico cuida da vida dos outros. A Nobs cuida do que é justo para eles.", "autor": "Nobs" },
+    { "texto": "Dinheiro pago a mais não é perda — é uma oportunidade esperando ser recuperada.", "autor": "Nobs" },
+    { "texto": "Cada contrato fechado é um médico que dorme mais tranquilo.", "autor": "Equipe Nobs" },
+    { "texto": "Não existe venda difícil. Existe benefício que ainda não foi bem explicado.", "autor": "Nobs" },
+    { "texto": "A consistência bate o talento quando o talento não é consistente.", "autor": "Desconhecido" }
+  ],
+
+  "avisos": [
+    "Reunião de pipeline: quinta-feira às 14h",
+    "Novos materiais de apresentação disponíveis na pasta compartilhada",
+    "Meta de março: faltam R$ 37.600 — vamos juntos!"
+  ],
+
+  "visual": {
+    "cor_primaria": "#00C896",
+    "cor_secundaria": "#0A0A0F",
+    "logo_texto": "NOBS"
+  }
+}
