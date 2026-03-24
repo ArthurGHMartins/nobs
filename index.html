@@ -22,7 +22,11 @@
     --slide-duration: 12000;
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
   html, body {
     width: 100%;
@@ -42,37 +46,6 @@
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     opacity: 0.35;
-  }
-
-  #play-pause-btn {
-    position: fixed;
-    top: 14px;
-    left: 14px;
-    z-index: 10001;
-    width: 42px;
-    height: 42px;
-    border: 1px solid var(--text-dimmer);
-    border-radius: 10px;
-    background: rgba(14, 14, 24, 0.88);
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    line-height: 1;
-    cursor: pointer;
-    backdrop-filter: blur(6px);
-    transition: transform 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
-  }
-
-  #play-pause-btn:hover {
-    transform: scale(1.05);
-    border-color: var(--green);
-  }
-
-  #play-pause-btn.paused {
-    color: var(--yellow);
-    border-color: var(--yellow);
   }
 
   #slides {
@@ -100,7 +73,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 48px 18px 84px;
+    padding: 18px 48px;
     border-bottom: 1px solid var(--text-dimmer);
     flex-shrink: 0;
   }
@@ -120,19 +93,55 @@
     margin-left: 14px;
   }
 
-  .clock {
-    font-family: 'DM Mono', monospace;
-    font-size: 22px;
-    color: var(--text-dim);
-    letter-spacing: 2px;
-  }
-
   .slide-label {
     font-size: 11px;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--text-dimmer);
     font-family: 'DM Mono', monospace;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .clock {
+    font-family: 'DM Mono', monospace;
+    font-size: 22px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    min-width: 108px;
+    text-align: right;
+  }
+
+  .play-pause-btn {
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--text-dimmer);
+    border-radius: 10px;
+    background: rgba(14, 14, 24, 0.88);
+    color: var(--text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    line-height: 1;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .play-pause-btn:hover {
+    transform: scale(1.05);
+    border-color: var(--green);
+  }
+
+  .play-pause-btn.paused {
+    color: var(--yellow);
+    border-color: var(--yellow);
   }
 
   .content {
@@ -204,7 +213,9 @@
   .kpi-card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 2px;
     background: var(--green);
   }
@@ -440,7 +451,7 @@
   }
 
   @keyframes pulse {
-    0%,100% { transform: scale(1); }
+    0%, 100% { transform: scale(1); }
     50% { transform: scale(1.15); }
   }
 
@@ -528,7 +539,9 @@
   .noticia-card::before {
     content: '';
     position: absolute;
-    left: 0; top: 0; bottom: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
     width: 3px;
     background: var(--green);
   }
@@ -640,15 +653,16 @@
 </head>
 <body>
 
-<button id="play-pause-btn" aria-label="Pausar slides" title="Pausar slides">⏸</button>
-
 <div id="slides">
 
   <div class="slide" id="slide-vendas">
     <div class="header">
       <div class="logo">NobsMídia <span>PAINEL DE VENDAS</span></div>
       <div class="slide-label" id="date-label"></div>
-      <div class="clock" id="clock"></div>
+      <div class="header-right">
+        <div class="clock" id="clock"></div>
+        <button class="play-pause-btn" aria-label="Pausar slides" title="Pausar slides">⏸</button>
+      </div>
     </div>
     <div class="content">
       <div class="vendas-top">
@@ -701,7 +715,10 @@
     <div class="header">
       <div class="logo">NobsMídia <span>DESTAQUE DO DIA</span></div>
       <div class="slide-label"></div>
-      <div class="clock" id="clock2"></div>
+      <div class="header-right">
+        <div class="clock" id="clock2"></div>
+        <button class="play-pause-btn" aria-label="Pausar slides" title="Pausar slides">⏸</button>
+      </div>
     </div>
     <div class="content">
       <div class="destaque-bg"></div>
@@ -716,7 +733,10 @@
     <div class="header">
       <div class="logo">NobsMídia <span>FRASE DO DIA</span></div>
       <div class="slide-label"></div>
-      <div class="clock" id="clock3"></div>
+      <div class="header-right">
+        <div class="clock" id="clock3"></div>
+        <button class="play-pause-btn" aria-label="Pausar slides" title="Pausar slides">⏸</button>
+      </div>
     </div>
     <div class="content">
       <div class="frase-bg"></div>
@@ -731,7 +751,10 @@
     <div class="header">
       <div class="logo">NobsMídia <span>NOTÍCIAS</span></div>
       <div class="slide-label"></div>
-      <div class="clock" id="clock4"></div>
+      <div class="header-right">
+        <div class="clock" id="clock4"></div>
+        <button class="play-pause-btn" aria-label="Pausar slides" title="Pausar slides">⏸</button>
+      </div>
     </div>
     <div class="content">
       <div class="section-eyebrow">Mercado & Setor</div>
@@ -743,7 +766,10 @@
     <div class="header">
       <div class="logo">NobsMídia <span>AVISOS INTERNOS</span></div>
       <div class="slide-label"></div>
-      <div class="clock" id="clock5"></div>
+      <div class="header-right">
+        <div class="clock" id="clock5"></div>
+        <button class="play-pause-btn" aria-label="Pausar slides" title="Pausar slides">⏸</button>
+      </div>
     </div>
     <div class="content">
       <div class="section-eyebrow">Comunicados da Equipe</div>
@@ -772,6 +798,7 @@ let slideRemaining = 0;
 
 const slides = document.querySelectorAll('.slide');
 const totalSlides = slides.length;
+const playPauseButtons = document.querySelectorAll('.play-pause-btn');
 
 function updateClocks() {
   const now = new Date();
@@ -784,7 +811,6 @@ function updateClocks() {
   const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
   const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
   const dateStr = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
-
   const dl = document.getElementById('date-label');
   if (dl) dl.textContent = dateStr;
 }
@@ -833,25 +859,24 @@ function freezeProgress() {
   const currentWidth = getComputedStyle(bar).width;
   const totalWidth = window.innerWidth;
   const pct = totalWidth > 0 ? (parseFloat(currentWidth) / totalWidth) * 100 : 0;
-
   bar.style.transition = 'none';
   bar.style.width = pct + '%';
 }
 
 function updatePlayPauseButton() {
-  const btn = document.getElementById('play-pause-btn');
-
-  if (isPaused) {
-    btn.textContent = '▶';
-    btn.classList.add('paused');
-    btn.setAttribute('aria-label', 'Retomar slides');
-    btn.setAttribute('title', 'Retomar slides');
-  } else {
-    btn.textContent = '⏸';
-    btn.classList.remove('paused');
-    btn.setAttribute('aria-label', 'Pausar slides');
-    btn.setAttribute('title', 'Pausar slides');
-  }
+  playPauseButtons.forEach(btn => {
+    if (isPaused) {
+      btn.textContent = '▶';
+      btn.classList.add('paused');
+      btn.setAttribute('aria-label', 'Retomar slides');
+      btn.setAttribute('title', 'Retomar slides');
+    } else {
+      btn.textContent = '⏸';
+      btn.classList.remove('paused');
+      btn.setAttribute('aria-label', 'Pausar slides');
+      btn.setAttribute('title', 'Pausar slides');
+    }
+  });
 }
 
 function goToSlide(i, options = {}) {
@@ -967,7 +992,7 @@ function render(d) {
   document.getElementById('meta-pct').textContent = pct + '%';
   document.getElementById('meta-falta-txt').textContent = `Faltam ${fmt(falta)} para bater a meta`;
 
-  const maxVal = v.ranking[0]?.valor || 1;
+  const maxVal = v.ranking?.[0]?.valor || 1;
   const medals = ['gold', 'silver', 'bronze', '', ''];
   const rl = document.getElementById('ranking-list');
   rl.innerHTML = '';
@@ -1037,7 +1062,9 @@ async function loadData() {
 buildDots();
 updatePlayPauseButton();
 
-document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
+playPauseButtons.forEach(btn => {
+  btn.addEventListener('click', togglePlayPause);
+});
 
 loadData().then(() => {
   goToSlide(0);
