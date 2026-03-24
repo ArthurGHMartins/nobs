@@ -25,7 +25,8 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   html, body {
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     background: var(--bg);
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
@@ -33,16 +34,16 @@
     cursor: default;
   }
 
-  /* ─── GRAIN OVERLAY ─── */
   body::before {
     content: '';
-    position: fixed; inset: 0; z-index: 9999;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     opacity: 0.35;
   }
 
-  /* ─── PLAY / PAUSE BUTTON ─── */
   #play-pause-btn {
     position: fixed;
     top: 14px;
@@ -74,34 +75,43 @@
     border-color: var(--yellow);
   }
 
-  /* ─── SLIDES CONTAINER ─── */
-  #slides { width: 100vw; height: 100vh; position: relative; }
+  #slides {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
 
   .slide {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.8s ease;
   }
+
   .slide.active {
     opacity: 1;
     pointer-events: all;
   }
 
-  /* ─── HEADER STRIP ─── */
   .header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px 18px 84px;
     border-bottom: 1px solid var(--text-dimmer);
     flex-shrink: 0;
   }
+
   .logo {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 28px;
     letter-spacing: 6px;
     color: var(--green);
   }
+
   .logo span {
     color: var(--text-dim);
     font-size: 13px;
@@ -109,12 +119,14 @@
     font-family: 'DM Mono', monospace;
     margin-left: 14px;
   }
+
   .clock {
     font-family: 'DM Mono', monospace;
     font-size: 22px;
     color: var(--text-dim);
     letter-spacing: 2px;
   }
+
   .slide-label {
     font-size: 11px;
     letter-spacing: 4px;
@@ -123,16 +135,16 @@
     font-family: 'DM Mono', monospace;
   }
 
-  /* ─── CONTENT AREA ─── */
   .content {
     flex: 1;
     display: flex;
     overflow: hidden;
   }
 
-  /* ─── PROGRESS BAR ─── */
   #progress-bar {
-    position: fixed; bottom: 0; left: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
     height: 3px;
     background: var(--green);
     z-index: 1000;
@@ -141,22 +153,30 @@
     width: 0%;
   }
 
-  /* ─── DOT INDICATORS ─── */
   #dots {
-    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 8px; z-index: 1000;
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 1000;
   }
+
   .dot {
-    width: 6px; height: 6px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: var(--text-dimmer);
     transition: background 0.3s, transform 0.3s;
   }
-  .dot.active { background: var(--green); transform: scale(1.4); }
 
-  /* ═══════════════════════════════════════
-     SLIDE 1 — PAINEL DE VENDAS
-  ═══════════════════════════════════════ */
+  .dot.active {
+    background: var(--green);
+    transform: scale(1.4);
+  }
+
+  /* SLIDE 1 — VENDAS */
   #slide-vendas .content {
     padding: 40px 48px 48px;
     gap: 32px;
@@ -174,33 +194,47 @@
     border: 1px solid var(--text-dimmer);
     border-radius: 12px;
     padding: 24px 28px;
-    display: flex; flex-direction: column;
+    display: flex;
+    flex-direction: column;
     gap: 8px;
     position: relative;
     overflow: hidden;
   }
+
   .kpi-card::before {
     content: '';
-    position: absolute; top: 0; left: 0; right: 0;
+    position: absolute;
+    top: 0; left: 0; right: 0;
     height: 2px;
     background: var(--green);
   }
+
   .kpi-card.red::before { background: var(--red); }
   .kpi-card.yellow::before { background: var(--yellow); }
 
   .kpi-label {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--text-dim); font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
   }
+
   .kpi-value {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 52px; line-height: 1;
+    font-size: 52px;
+    line-height: 1;
     color: var(--white);
   }
+
   .kpi-value.green { color: var(--green); }
   .kpi-value.red { color: var(--red); }
   .kpi-value.yellow { color: var(--yellow); }
-  .kpi-sub { font-size: 13px; color: var(--text-dim); }
+
+  .kpi-sub {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
 
   .vendas-bottom {
     display: grid;
@@ -209,214 +243,394 @@
     flex: 1;
   }
 
-  /* META BAR */
   .meta-card {
     background: var(--bg2);
     border: 1px solid var(--text-dimmer);
     border-radius: 12px;
     padding: 28px 32px;
-    display: flex; flex-direction: column; gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
-  .meta-title { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); font-family: 'DM Mono', monospace; }
-  .meta-numbers { display: flex; align-items: baseline; gap: 12px; }
-  .meta-real { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: var(--green); line-height: 1; }
-  .meta-of { font-size: 14px; color: var(--text-dim); }
-  .meta-goal { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--text-dim); line-height: 1; }
-  .meta-bar-bg { background: var(--bg3); border-radius: 99px; height: 12px; overflow: hidden; }
+
+  .meta-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .meta-numbers {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .meta-real {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: var(--green);
+    line-height: 1;
+  }
+
+  .meta-of {
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+
+  .meta-goal {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--text-dim);
+    line-height: 1;
+  }
+
+  .meta-bar-bg {
+    background: var(--bg3);
+    border-radius: 99px;
+    height: 12px;
+    overflow: hidden;
+  }
+
   .meta-bar-fill {
-    height: 100%; border-radius: 99px;
+    height: 100%;
+    border-radius: 99px;
     background: linear-gradient(90deg, var(--green), #00FFBB);
     box-shadow: 0 0 16px var(--green-mid);
     transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .meta-pct { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--green); }
-  .meta-row { display: flex; justify-content: space-between; align-items: center; }
-  .meta-falta { font-size: 13px; color: var(--text-dim); }
 
-  /* RANKING */
+  .meta-pct {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--green);
+  }
+
+  .meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .meta-falta {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
   .ranking-card {
     background: var(--bg2);
     border: 1px solid var(--text-dimmer);
     border-radius: 12px;
     padding: 24px 28px;
-    display: flex; flex-direction: column; gap: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     overflow: hidden;
   }
-  .ranking-title { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); font-family: 'DM Mono', monospace; }
-  .ranking-row {
-    display: flex; align-items: center; gap: 14px;
+
+  .ranking-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
   }
+
+  .ranking-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
   .rank-pos {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px; width: 28px; text-align: right;
+    font-size: 22px;
+    width: 28px;
+    text-align: right;
     color: var(--text-dimmer);
     flex-shrink: 0;
   }
+
   .rank-pos.gold { color: #FFD700; }
   .rank-pos.silver { color: #C0C0C0; }
   .rank-pos.bronze { color: #CD7F32; }
-  .rank-bar-wrap { flex: 1; }
-  .rank-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-  .rank-bar-bg { background: var(--bg3); border-radius: 99px; height: 6px; overflow: hidden; }
-  .rank-bar-fill { height: 100%; border-radius: 99px; background: var(--green); opacity: 0.6; }
-  .rank-val { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-dim); flex-shrink: 0; }
 
-  /* ═══════════════════════════════════════
-     SLIDE 2 — DESTAQUE DO DIA
-  ═══════════════════════════════════════ */
+  .rank-bar-wrap { flex: 1; }
+
+  .rank-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .rank-bar-bg {
+    background: var(--bg3);
+    border-radius: 99px;
+    height: 6px;
+    overflow: hidden;
+  }
+
+  .rank-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: var(--green);
+    opacity: 0.6;
+  }
+
+  .rank-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+
+  /* SLIDE 2 — DESTAQUE */
   #slide-destaque .content {
-    align-items: center; justify-content: center;
-    flex-direction: column; gap: 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0;
     position: relative;
     overflow: hidden;
   }
+
   .destaque-bg {
-    position: absolute; inset: 0;
+    position: absolute;
+    inset: 0;
     background: radial-gradient(ellipse 60% 60% at 50% 50%, var(--green-dim), transparent);
   }
+
   .destaque-eyebrow {
-    font-size: 11px; letter-spacing: 5px; text-transform: uppercase;
-    color: var(--green); font-family: 'DM Mono', monospace;
-    margin-bottom: 24px; z-index: 1;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--green);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 24px;
+    z-index: 1;
   }
+
   .destaque-nome {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 120px; line-height: 1;
+    font-size: 120px;
+    line-height: 1;
     color: var(--white);
-    text-align: center; z-index: 1;
+    text-align: center;
+    z-index: 1;
     text-shadow: 0 0 80px var(--green-mid);
   }
+
   .destaque-motivo {
-    font-size: 22px; font-weight: 300; font-style: italic;
-    color: var(--text-dim); margin-top: 16px;
-    text-align: center; z-index: 1;
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-dim);
+    margin-top: 16px;
+    text-align: center;
+    z-index: 1;
     max-width: 600px;
   }
+
   .destaque-star {
-    font-size: 64px; margin-bottom: 8px; z-index: 1;
+    font-size: 64px;
+    margin-bottom: 8px;
+    z-index: 1;
     animation: pulse 2s ease-in-out infinite;
   }
-  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
 
-  /* ═══════════════════════════════════════
-     SLIDE 3 — FRASES
-  ═══════════════════════════════════════ */
-  #slide-frase .content {
-    align-items: center; justify-content: center;
-    flex-direction: column; gap: 32px;
-    padding: 60px 120px;
-    position: relative; overflow: hidden;
+  @keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
   }
+
+  /* SLIDE 3 — FRASE */
+  #slide-frase .content {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 32px;
+    padding: 60px 120px;
+    position: relative;
+    overflow: hidden;
+  }
+
   .frase-bg {
-    position: absolute; inset: 0;
+    position: absolute;
+    inset: 0;
     background: radial-gradient(ellipse 40% 80% at 20% 50%, #00C89608, transparent);
   }
+
   .frase-aspas {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 200px; line-height: 0.6;
-    color: var(--green); opacity: 0.12;
-    position: absolute; top: 40px; left: 48px;
+    font-size: 200px;
+    line-height: 0.6;
+    color: var(--green);
+    opacity: 0.12;
+    position: absolute;
+    top: 40px;
+    left: 48px;
   }
+
   .frase-texto {
-    font-size: 42px; font-weight: 300; line-height: 1.3;
-    text-align: center; z-index: 1;
+    font-size: 42px;
+    font-weight: 300;
+    line-height: 1.3;
+    text-align: center;
+    z-index: 1;
     color: var(--white);
     max-width: 900px;
   }
+
   .frase-autor {
     font-family: 'DM Mono', monospace;
-    font-size: 13px; letter-spacing: 3px;
-    color: var(--green); z-index: 1;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--green);
+    z-index: 1;
     text-transform: uppercase;
   }
+
   .frase-linha {
-    width: 60px; height: 1px; background: var(--green); z-index: 1;
+    width: 60px;
+    height: 1px;
+    background: var(--green);
+    z-index: 1;
   }
 
-  /* ═══════════════════════════════════════
-     SLIDE 4 — NOTÍCIAS
-  ═══════════════════════════════════════ */
+  /* SLIDE 4 — NOTÍCIAS */
   #slide-noticias .content {
     flex-direction: column;
     padding: 40px 48px 48px;
     gap: 24px;
   }
+
   .noticias-grid {
-    display: flex; flex-direction: column; gap: 20px; flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
   }
+
   .noticia-card {
     background: var(--bg2);
     border: 1px solid var(--text-dimmer);
     border-radius: 12px;
     padding: 28px 36px;
-    display: flex; align-items: center; gap: 28px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
     flex: 1;
-    position: relative; overflow: hidden;
-  }
-  .noticia-card::before {
-    content: '';
-    position: absolute; left: 0; top: 0; bottom: 0;
-    width: 3px; background: var(--green);
-  }
-  .noticia-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 56px; color: var(--text-dimmer); flex-shrink: 0; line-height: 1;
-  }
-  .noticia-info { flex: 1; }
-  .noticia-titulo {
-    font-size: 20px; font-weight: 600; line-height: 1.3;
-    color: var(--white); margin-bottom: 8px;
-  }
-  .noticia-fonte {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px; letter-spacing: 2px;
-    color: var(--green); text-transform: uppercase;
-  }
-  .section-eyebrow {
-    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--text-dim); font-family: 'DM Mono', monospace;
+    position: relative;
+    overflow: hidden;
   }
 
-  /* ═══════════════════════════════════════
-     SLIDE 5 — AVISOS
-  ═══════════════════════════════════════ */
+  .noticia-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--green);
+  }
+
+  .noticia-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--text-dimmer);
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .noticia-info { flex: 1; }
+
+  .noticia-titulo {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .noticia-fonte {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--green);
+    text-transform: uppercase;
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* SLIDE 5 — AVISOS */
   #slide-avisos .content {
     flex-direction: column;
     padding: 40px 48px 48px;
     gap: 24px;
   }
-  .avisos-list { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+
+  .avisos-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
   .aviso-item {
     background: var(--bg2);
     border: 1px solid var(--text-dimmer);
     border-radius: 12px;
     padding: 28px 36px;
-    display: flex; align-items: center; gap: 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
     flex: 1;
   }
-  .aviso-icon { font-size: 32px; flex-shrink: 0; }
-  .aviso-texto { font-size: 22px; font-weight: 400; line-height: 1.4; color: var(--white); }
 
-  /* ─── ANIMATIONS ─── */
+  .aviso-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .aviso-texto {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--white);
+  }
+
   .slide.active .kpi-card {
     animation: fadeUp 0.5s ease both;
   }
-  .slide.active .kpi-card:nth-child(1) { animation-delay: 0.05s }
-  .slide.active .kpi-card:nth-child(2) { animation-delay: 0.12s }
-  .slide.active .kpi-card:nth-child(3) { animation-delay: 0.19s }
-  .slide.active .kpi-card:nth-child(4) { animation-delay: 0.26s }
+
+  .slide.active .kpi-card:nth-child(1) { animation-delay: 0.05s; }
+  .slide.active .kpi-card:nth-child(2) { animation-delay: 0.12s; }
+  .slide.active .kpi-card:nth-child(3) { animation-delay: 0.19s; }
+  .slide.active .kpi-card:nth-child(4) { animation-delay: 0.26s; }
 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .slide.active .noticia-card, .slide.active .aviso-item {
+  .slide.active .noticia-card,
+  .slide.active .aviso-item {
     animation: fadeUp 0.5s ease both;
   }
-  .slide.active .noticia-card:nth-child(1), .slide.active .aviso-item:nth-child(1) { animation-delay: 0.1s }
-  .slide.active .noticia-card:nth-child(2), .slide.active .aviso-item:nth-child(2) { animation-delay: 0.2s }
-  .slide.active .noticia-card:nth-child(3), .slide.active .aviso-item:nth-child(3) { animation-delay: 0.3s }
+
+  .slide.active .noticia-card:nth-child(1),
+  .slide.active .aviso-item:nth-child(1) { animation-delay: 0.1s; }
+
+  .slide.active .noticia-card:nth-child(2),
+  .slide.active .aviso-item:nth-child(2) { animation-delay: 0.2s; }
+
+  .slide.active .noticia-card:nth-child(3),
+  .slide.active .aviso-item:nth-child(3) { animation-delay: 0.3s; }
 
   .slide.active .destaque-nome { animation: fadeUp 0.7s 0.2s ease both; }
   .slide.active .destaque-motivo { animation: fadeUp 0.7s 0.4s ease both; }
@@ -430,7 +644,6 @@
 
 <div id="slides">
 
-  <!-- ── SLIDE 1: VENDAS ── -->
   <div class="slide" id="slide-vendas">
     <div class="header">
       <div class="logo">NobsMídia <span>PAINEL DE VENDAS</span></div>
@@ -484,7 +697,6 @@
     </div>
   </div>
 
-  <!-- ── SLIDE 2: DESTAQUE ── -->
   <div class="slide" id="slide-destaque">
     <div class="header">
       <div class="logo">NobsMídia <span>DESTAQUE DO DIA</span></div>
@@ -500,7 +712,6 @@
     </div>
   </div>
 
-  <!-- ── SLIDE 3: FRASE ── -->
   <div class="slide" id="slide-frase">
     <div class="header">
       <div class="logo">NobsMídia <span>FRASE DO DIA</span></div>
@@ -516,7 +727,6 @@
     </div>
   </div>
 
-  <!-- ── SLIDE 4: NOTÍCIAS ── -->
   <div class="slide" id="slide-noticias">
     <div class="header">
       <div class="logo">NobsMídia <span>NOTÍCIAS</span></div>
@@ -529,7 +739,6 @@
     </div>
   </div>
 
-  <!-- ── SLIDE 5: AVISOS ── -->
   <div class="slide" id="slide-avisos">
     <div class="header">
       <div class="logo">NobsMídia <span>AVISOS INTERNOS</span></div>
@@ -548,12 +757,10 @@
 <div id="dots"></div>
 
 <script>
-// ─── CONFIG ───────────────────────────────────────────
 const DATA_URL = 'dados.json';
-const REFRESH_INTERVAL = 5 * 60 * 1000; // 5 min
+const REFRESH_INTERVAL = 5 * 60 * 1000;
 const SLIDE_DURATIONS = [16000, 10000, 12000, 13000, 11000];
 
-// ─── STATE ────────────────────────────────────────────
 let data = null;
 let currentSlide = 0;
 let fraseIndex = 0;
@@ -566,25 +773,24 @@ let slideRemaining = 0;
 const slides = document.querySelectorAll('.slide');
 const totalSlides = slides.length;
 
-// ─── CLOCK ────────────────────────────────────────────
 function updateClocks() {
   const now = new Date();
-  const h = String(now.getHours()).padStart(2,'0');
-  const m = String(now.getMinutes()).padStart(2,'0');
-  const s = String(now.getSeconds()).padStart(2,'0');
+  const h = String(now.getHours()).padStart(2, '0');
+  const m = String(now.getMinutes()).padStart(2, '0');
+  const s = String(now.getSeconds()).padStart(2, '0');
   const str = `${h}:${m}:${s}`;
   document.querySelectorAll('[id^="clock"]').forEach(el => el.textContent = str);
 
-  const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-  const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+  const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
   const dateStr = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+
   const dl = document.getElementById('date-label');
   if (dl) dl.textContent = dateStr;
 }
 setInterval(updateClocks, 1000);
 updateClocks();
 
-// ─── DOTS ─────────────────────────────────────────────
 function buildDots() {
   const dotsEl = document.getElementById('dots');
   dotsEl.innerHTML = '';
@@ -601,7 +807,6 @@ function updateDots(i) {
   });
 }
 
-// ─── PROGRESS BAR ─────────────────────────────────────
 function startProgress(duration, elapsed = 0) {
   const bar = document.getElementById('progress-bar');
   const pct = Math.max(0, Math.min(100, (elapsed / duration) * 100));
@@ -611,21 +816,47 @@ function startProgress(duration, elapsed = 0) {
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      bar.style.transition = `width ${duration - elapsed}ms linear`;
+      bar.style.transition = `width ${Math.max(0, duration - elapsed)}ms linear`;
       bar.style.width = '100%';
     });
   });
 }
 
-function freezeProgress() {
+function setProgressInstant(pct) {
   const bar = document.getElementById('progress-bar');
-  const computedWidth = getComputedStyle(bar).width;
   bar.style.transition = 'none';
-  bar.style.width = computedWidth;
+  bar.style.width = pct + '%';
 }
 
-// ─── SLIDE SHOW ───────────────────────────────────────
-function goToSlide(i) {
+function freezeProgress() {
+  const bar = document.getElementById('progress-bar');
+  const currentWidth = getComputedStyle(bar).width;
+  const totalWidth = window.innerWidth;
+  const pct = totalWidth > 0 ? (parseFloat(currentWidth) / totalWidth) * 100 : 0;
+
+  bar.style.transition = 'none';
+  bar.style.width = pct + '%';
+}
+
+function updatePlayPauseButton() {
+  const btn = document.getElementById('play-pause-btn');
+
+  if (isPaused) {
+    btn.textContent = '▶';
+    btn.classList.add('paused');
+    btn.setAttribute('aria-label', 'Retomar slides');
+    btn.setAttribute('title', 'Retomar slides');
+  } else {
+    btn.textContent = '⏸';
+    btn.classList.remove('paused');
+    btn.setAttribute('aria-label', 'Pausar slides');
+    btn.setAttribute('title', 'Pausar slides');
+  }
+}
+
+function goToSlide(i, options = {}) {
+  const { preservePauseState = true } = options;
+
   clearTimeout(slideTimer);
 
   slides[currentSlide].classList.remove('active');
@@ -638,19 +869,24 @@ function goToSlide(i) {
   slideStartedAt = Date.now();
   slideRemaining = dur;
 
-  startProgress(dur, 0);
-
-  if (!isPaused) {
-    slideTimer = setTimeout(() => goToSlide(currentSlide + 1), dur);
+  if (preservePauseState && isPaused) {
+    setProgressInstant(0);
+    updatePlayPauseButton();
+    return;
   }
+
+  isPaused = false;
+  updatePlayPauseButton();
+  startProgress(dur, 0);
+  slideTimer = setTimeout(() => goToSlide(currentSlide + 1), dur);
 }
 
 function nextSlide() {
-  goToSlide(currentSlide + 1);
+  goToSlide(currentSlide + 1, { preservePauseState: true });
 }
 
 function prevSlide() {
-  goToSlide(currentSlide - 1);
+  goToSlide(currentSlide - 1, { preservePauseState: true });
 }
 
 function pauseSlides() {
@@ -664,30 +900,21 @@ function pauseSlides() {
   slideRemaining = Math.max(0, dur - elapsed);
 
   freezeProgress();
-
-  const btn = document.getElementById('play-pause-btn');
-  btn.textContent = '▶';
-  btn.classList.add('paused');
-  btn.setAttribute('aria-label', 'Retomar slides');
-  btn.setAttribute('title', 'Retomar slides');
+  updatePlayPauseButton();
 }
 
 function resumeSlides() {
   if (!isPaused) return;
 
   isPaused = false;
+  updatePlayPauseButton();
 
-  const elapsed = SLIDE_DURATIONS[currentSlide] - slideRemaining;
+  const dur = SLIDE_DURATIONS[currentSlide];
+  const elapsed = dur - slideRemaining;
+
   slideStartedAt = Date.now() - elapsed;
-
-  startProgress(SLIDE_DURATIONS[currentSlide], elapsed);
+  startProgress(dur, elapsed);
   slideTimer = setTimeout(() => goToSlide(currentSlide + 1), slideRemaining);
-
-  const btn = document.getElementById('play-pause-btn');
-  btn.textContent = '⏸';
-  btn.classList.remove('paused');
-  btn.setAttribute('aria-label', 'Pausar slides');
-  btn.setAttribute('title', 'Pausar slides');
 }
 
 function togglePlayPause() {
@@ -698,7 +925,6 @@ function togglePlayPause() {
   }
 }
 
-// ─── KEYBOARD CONTROLS ────────────────────────────────
 document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowRight') {
     e.preventDefault();
@@ -716,40 +942,42 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// ─── FORMAT ───────────────────────────────────────────
 function fmt(val) {
   return 'R$\u00a0' + Math.round(val).toLocaleString('pt-BR');
 }
 
-// ─── RENDER ───────────────────────────────────────────
 function render(d) {
   const v = d.vendas;
 
   document.getElementById('kpi-hoje').textContent = v.contratos_hoje;
   document.getElementById('kpi-mes').textContent = v.contratos_mes;
   document.getElementById('kpi-ticket').textContent = fmt(v.ticket_medio);
+
   const falta = v.meta_mensal - v.realizado_mes;
   document.getElementById('kpi-falta').textContent = fmt(falta);
 
   const pct = Math.round((v.realizado_mes / v.meta_mensal) * 100);
   document.getElementById('meta-real').textContent = fmt(v.realizado_mes);
   document.getElementById('meta-goal').textContent = fmt(v.meta_mensal);
+
   setTimeout(() => {
     document.getElementById('meta-bar').style.width = pct + '%';
   }, 600);
+
   document.getElementById('meta-pct').textContent = pct + '%';
   document.getElementById('meta-falta-txt').textContent = `Faltam ${fmt(falta)} para bater a meta`;
 
-  const maxVal = v.ranking[0].valor;
-  const medals = ['gold','silver','bronze','',''];
+  const maxVal = v.ranking[0]?.valor || 1;
+  const medals = ['gold', 'silver', 'bronze', '', ''];
   const rl = document.getElementById('ranking-list');
   rl.innerHTML = '';
-  v.ranking.forEach((r, i) => {
+
+  (v.ranking || []).forEach((r, i) => {
     const pctBar = Math.round((r.valor / maxVal) * 100);
     const div = document.createElement('div');
     div.className = 'ranking-row';
     div.innerHTML = `
-      <div class="rank-pos ${medals[i]}">${i+1}</div>
+      <div class="rank-pos ${medals[i] || ''}">${i + 1}</div>
       <div class="rank-bar-wrap">
         <div class="rank-name">${r.nome}</div>
         <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:${pctBar}%"></div></div>
@@ -759,21 +987,24 @@ function render(d) {
     rl.appendChild(div);
   });
 
-  document.getElementById('destaque-nome').textContent = v.destaque_dia.nome;
-  document.getElementById('destaque-motivo').textContent = v.destaque_dia.motivo;
+  document.getElementById('destaque-nome').textContent = v.destaque_dia?.nome || '—';
+  document.getElementById('destaque-motivo').textContent = v.destaque_dia?.motivo || '—';
 
-  const frase = d.frases[fraseIndex % d.frases.length];
-  document.getElementById('frase-texto').textContent = frase.texto;
-  document.getElementById('frase-autor').textContent = '— ' + frase.autor;
-  fraseIndex++;
+  const frases = d.frases || [];
+  if (frases.length) {
+    const frase = frases[fraseIndex % frases.length];
+    document.getElementById('frase-texto').textContent = frase.texto;
+    document.getElementById('frase-autor').textContent = '— ' + frase.autor;
+    fraseIndex++;
+  }
 
   const nl = document.getElementById('noticias-list');
   nl.innerHTML = '';
-  d.noticias.forEach((n, i) => {
+  (d.noticias || []).forEach((n, i) => {
     const div = document.createElement('div');
     div.className = 'noticia-card';
     div.innerHTML = `
-      <div class="noticia-num">0${i+1}</div>
+      <div class="noticia-num">0${i + 1}</div>
       <div class="noticia-info">
         <div class="noticia-titulo">${n.titulo}</div>
         <div class="noticia-fonte">${n.fonte}</div>
@@ -782,10 +1013,10 @@ function render(d) {
     nl.appendChild(div);
   });
 
-  const icons = ['📌','📅','🎯','💬','🔔'];
+  const icons = ['📌', '📅', '🎯', '💬', '🔔'];
   const al = document.getElementById('avisos-list');
   al.innerHTML = '';
-  d.avisos.forEach((a, i) => {
+  (d.avisos || []).forEach((a, i) => {
     const div = document.createElement('div');
     div.className = 'aviso-item';
     div.innerHTML = `<div class="aviso-icon">${icons[i % icons.length]}</div><div class="aviso-texto">${a}</div>`;
@@ -793,19 +1024,18 @@ function render(d) {
   });
 }
 
-// ─── FETCH DATA ───────────────────────────────────────
 async function loadData() {
   try {
     const res = await fetch(DATA_URL + '?t=' + Date.now());
     data = await res.json();
     render(data);
-  } catch(e) {
+  } catch (e) {
     console.warn('Erro ao carregar dados:', e);
   }
 }
 
-// ─── INIT ─────────────────────────────────────────────
 buildDots();
+updatePlayPauseButton();
 
 document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
 
