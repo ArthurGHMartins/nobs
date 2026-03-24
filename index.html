@@ -30,7 +30,7 @@
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
     overflow: hidden;
-    cursor: none;
+    cursor: default;
   }
 
   /* ─── GRAIN OVERLAY ─── */
@@ -40,6 +40,38 @@
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     opacity: 0.35;
+  }
+
+  /* ─── PLAY / PAUSE BUTTON ─── */
+  #play-pause-btn {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 10001;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--text-dimmer);
+    border-radius: 10px;
+    background: rgba(14, 14, 24, 0.88);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  }
+
+  #play-pause-btn:hover {
+    transform: scale(1.05);
+    border-color: var(--green);
+  }
+
+  #play-pause-btn.paused {
+    color: var(--yellow);
+    border-color: var(--yellow);
   }
 
   /* ─── SLIDES CONTAINER ─── */
@@ -70,7 +102,13 @@
     letter-spacing: 6px;
     color: var(--green);
   }
-  .logo span { color: var(--text-dim); font-size: 13px; letter-spacing: 3px; font-family: 'DM Mono', monospace; margin-left: 14px; }
+  .logo span {
+    color: var(--text-dim);
+    font-size: 13px;
+    letter-spacing: 3px;
+    font-family: 'DM Mono', monospace;
+    margin-left: 14px;
+  }
   .clock {
     font-family: 'DM Mono', monospace;
     font-size: 22px;
@@ -100,6 +138,7 @@
     z-index: 1000;
     transition: none;
     box-shadow: 0 0 12px var(--green);
+    width: 0%;
   }
 
   /* ─── DOT INDICATORS ─── */
@@ -387,6 +426,8 @@
 </head>
 <body>
 
+<button id="play-pause-btn" aria-label="Pausar slides" title="Pausar slides">⏸</button>
+
 <div id="slides">
 
   <!-- ── SLIDE 1: VENDAS ── -->
@@ -503,25 +544,25 @@
 
 </div>
 
-<!-- progress bar -->
 <div id="progress-bar"></div>
-<!-- dots -->
 <div id="dots"></div>
 
 <script>
 // ─── CONFIG ───────────────────────────────────────────
 const DATA_URL = 'dados.json';
 const REFRESH_INTERVAL = 5 * 60 * 1000; // 5 min
-
-const SLIDE_DURATIONS = [16000, 10000, 12000, 13000, 11000]; // ms per slide
+const SLIDE_DURATIONS = [16000, 10000, 12000, 13000, 11000];
 
 // ─── STATE ────────────────────────────────────────────
 let data = null;
 let currentSlide = 0;
 let fraseIndex = 0;
 let slideTimer = null;
-let progressTimer = null;
-let progressStart = null;
+
+let isPaused = false;
+let slideStartedAt = null;
+let slideRemaining = 0;
+
 const slides = document.querySelectorAll('.slide');
 const totalSlides = slides.length;
 
@@ -553,34 +594,127 @@ function buildDots() {
     dotsEl.appendChild(d);
   }
 }
+
 function updateDots(i) {
-  document.querySelectorAll('.dot').forEach((d,idx) => d.classList.toggle('active', idx===i));
+  document.querySelectorAll('.dot').forEach((d, idx) => {
+    d.classList.toggle('active', idx === i);
+  });
 }
 
 // ─── PROGRESS BAR ─────────────────────────────────────
-function startProgress(duration) {
+function startProgress(duration, elapsed = 0) {
   const bar = document.getElementById('progress-bar');
+  const pct = Math.max(0, Math.min(100, (elapsed / duration) * 100));
+
   bar.style.transition = 'none';
-  bar.style.width = '0%';
-  setTimeout(() => {
-    bar.style.transition = `width ${duration}ms linear`;
-    bar.style.width = '100%';
-  }, 30);
+  bar.style.width = pct + '%';
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      bar.style.transition = `width ${duration - elapsed}ms linear`;
+      bar.style.width = '100%';
+    });
+  });
+}
+
+function freezeProgress() {
+  const bar = document.getElementById('progress-bar');
+  const computedWidth = getComputedStyle(bar).width;
+  bar.style.transition = 'none';
+  bar.style.width = computedWidth;
 }
 
 // ─── SLIDE SHOW ───────────────────────────────────────
 function goToSlide(i) {
+  clearTimeout(slideTimer);
+
   slides[currentSlide].classList.remove('active');
   currentSlide = (i + totalSlides) % totalSlides;
   slides[currentSlide].classList.add('active');
+
   updateDots(currentSlide);
+
   const dur = SLIDE_DURATIONS[currentSlide];
-  startProgress(dur);
-  clearTimeout(slideTimer);
-  slideTimer = setTimeout(() => goToSlide(currentSlide + 1), dur);
+  slideStartedAt = Date.now();
+  slideRemaining = dur;
+
+  startProgress(dur, 0);
+
+  if (!isPaused) {
+    slideTimer = setTimeout(() => goToSlide(currentSlide + 1), dur);
+  }
 }
 
-function nextSlide() { goToSlide(currentSlide + 1); }
+function nextSlide() {
+  goToSlide(currentSlide + 1);
+}
+
+function prevSlide() {
+  goToSlide(currentSlide - 1);
+}
+
+function pauseSlides() {
+  if (isPaused) return;
+
+  isPaused = true;
+  clearTimeout(slideTimer);
+
+  const dur = SLIDE_DURATIONS[currentSlide];
+  const elapsed = Date.now() - slideStartedAt;
+  slideRemaining = Math.max(0, dur - elapsed);
+
+  freezeProgress();
+
+  const btn = document.getElementById('play-pause-btn');
+  btn.textContent = '▶';
+  btn.classList.add('paused');
+  btn.setAttribute('aria-label', 'Retomar slides');
+  btn.setAttribute('title', 'Retomar slides');
+}
+
+function resumeSlides() {
+  if (!isPaused) return;
+
+  isPaused = false;
+
+  const elapsed = SLIDE_DURATIONS[currentSlide] - slideRemaining;
+  slideStartedAt = Date.now() - elapsed;
+
+  startProgress(SLIDE_DURATIONS[currentSlide], elapsed);
+  slideTimer = setTimeout(() => goToSlide(currentSlide + 1), slideRemaining);
+
+  const btn = document.getElementById('play-pause-btn');
+  btn.textContent = '⏸';
+  btn.classList.remove('paused');
+  btn.setAttribute('aria-label', 'Pausar slides');
+  btn.setAttribute('title', 'Pausar slides');
+}
+
+function togglePlayPause() {
+  if (isPaused) {
+    resumeSlides();
+  } else {
+    pauseSlides();
+  }
+}
+
+// ─── KEYBOARD CONTROLS ────────────────────────────────
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') {
+    e.preventDefault();
+    nextSlide();
+  }
+
+  if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    prevSlide();
+  }
+
+  if (e.key === ' ' || e.code === 'Space') {
+    e.preventDefault();
+    togglePlayPause();
+  }
+});
 
 // ─── FORMAT ───────────────────────────────────────────
 function fmt(val) {
@@ -591,14 +725,12 @@ function fmt(val) {
 function render(d) {
   const v = d.vendas;
 
-  // KPIs
   document.getElementById('kpi-hoje').textContent = v.contratos_hoje;
   document.getElementById('kpi-mes').textContent = v.contratos_mes;
   document.getElementById('kpi-ticket').textContent = fmt(v.ticket_medio);
   const falta = v.meta_mensal - v.realizado_mes;
   document.getElementById('kpi-falta').textContent = fmt(falta);
 
-  // Meta
   const pct = Math.round((v.realizado_mes / v.meta_mensal) * 100);
   document.getElementById('meta-real').textContent = fmt(v.realizado_mes);
   document.getElementById('meta-goal').textContent = fmt(v.meta_mensal);
@@ -608,7 +740,6 @@ function render(d) {
   document.getElementById('meta-pct').textContent = pct + '%';
   document.getElementById('meta-falta-txt').textContent = `Faltam ${fmt(falta)} para bater a meta`;
 
-  // Ranking
   const maxVal = v.ranking[0].valor;
   const medals = ['gold','silver','bronze','',''];
   const rl = document.getElementById('ranking-list');
@@ -628,17 +759,14 @@ function render(d) {
     rl.appendChild(div);
   });
 
-  // Destaque
   document.getElementById('destaque-nome').textContent = v.destaque_dia.nome;
   document.getElementById('destaque-motivo').textContent = v.destaque_dia.motivo;
 
-  // Frase (rotaciona a cada vez que renderiza)
   const frase = d.frases[fraseIndex % d.frases.length];
   document.getElementById('frase-texto').textContent = frase.texto;
   document.getElementById('frase-autor').textContent = '— ' + frase.autor;
   fraseIndex++;
 
-  // Notícias
   const nl = document.getElementById('noticias-list');
   nl.innerHTML = '';
   d.noticias.forEach((n, i) => {
@@ -654,7 +782,6 @@ function render(d) {
     nl.appendChild(div);
   });
 
-  // Avisos
   const icons = ['📌','📅','🎯','💬','🔔'];
   const al = document.getElementById('avisos-list');
   al.innerHTML = '';
@@ -679,9 +806,13 @@ async function loadData() {
 
 // ─── INIT ─────────────────────────────────────────────
 buildDots();
+
+document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
+
 loadData().then(() => {
   goToSlide(0);
 });
+
 setInterval(loadData, REFRESH_INTERVAL);
 </script>
 </body>
