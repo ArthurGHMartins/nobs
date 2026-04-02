@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>nobs · Procuração e-CAC</title>
+<link rel="icon" href="favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,400;0,600;0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
@@ -14,74 +15,72 @@
     --verde-escuro-2: #19712d;
     --verde-claro-1: #6edc64;
     --verde-claro-2: #d7f0dc;
-    --amarelo: #ffff46;
-    --branco: #ffffff;
-    --texto-suave: rgba(255,255,255,0.72);
-    --card-bg: rgba(255,255,255,0.06);
-    --card-border: rgba(110,220,100,0.18);
+    --amarelo: #c8a800;
+    --bg: #eef7f0;
+    --bg-card: #ffffff;
+    --bg-grupo: #ffffff;
+    --texto: #19412d;
+    --texto-suave: #4a6b58;
+    --texto-muito-suave: #7a9b87;
+    --border: rgba(25, 65, 45, 0.12);
+    --border-grupo: rgba(25, 113, 45, 0.18);
     --radius: 16px;
     --radius-sm: 10px;
+    --shadow: 0 2px 12px rgba(25,65,45,0.08);
+    --shadow-grupo: 0 4px 20px rgba(25,65,45,0.1);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
     font-family: 'Figtree', sans-serif;
-    background-color: var(--verde-escuro-1);
-    color: var(--branco);
+    background-color: var(--bg);
+    color: var(--texto);
     min-height: 100vh;
     overflow-x: hidden;
   }
 
-  /* ── GRAFISMO DIAGONAL (background pattern) ── */
-  .bg-stripes {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
+  /* ── HEADER VERDE ── */
+  .site-header {
+    background: var(--verde-escuro-1);
+    padding: 24px 20px 28px;
+    position: relative;
     overflow: hidden;
   }
-  .bg-stripes::before,
-  .bg-stripes::after {
+
+  .site-header::before {
     content: '';
     position: absolute;
+    top: -40px; right: -60px;
+    width: 220px; height: 220px;
     background: var(--verde-escuro-2);
-    opacity: 0.55;
-    border-radius: 4px;
+    opacity: 0.5;
+    border-radius: 50%;
   }
-  .bg-stripes::before {
-    width: 60vw; height: 200vh;
-    top: -60vh; left: -10vw;
-    transform: rotate(-28deg);
-  }
-  .bg-stripes::after {
-    width: 40vw; height: 200vh;
-    top: -40vh; right: -5vw;
+
+  .site-header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 30%;
+    width: 160px; height: 160px;
+    background: var(--verde-claro-1);
+    opacity: 0.08;
+    border-radius: 50%;
     transform: rotate(-28deg);
   }
 
-  .wrap {
-    position: relative;
-    z-index: 1;
+  .header-inner {
     max-width: 680px;
     margin: 0 auto;
-    padding: 0 20px 60px;
+    position: relative;
+    z-index: 1;
   }
 
-  /* ── HEADER ── */
-  header {
-    padding: 32px 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .logo-svg {
-    width: 110px;
-    height: auto;
+  .logo-img {
+    height: 36px;
+    width: auto;
+    display: block;
   }
 
   .tagline {
@@ -90,74 +89,91 @@
     text-transform: uppercase;
     color: var(--verde-claro-1);
     font-weight: 600;
-    margin-top: 2px;
+    margin-top: 6px;
+    opacity: 0.85;
+  }
+
+  /* ── WRAP ── */
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 20px 72px;
   }
 
   /* ── HERO ── */
   .hero {
-    margin-top: 40px;
-    padding: 36px 28px 32px;
-    background: linear-gradient(135deg, rgba(25,113,45,0.55) 0%, rgba(25,65,45,0.3) 100%);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius);
-    position: relative;
-    overflow: hidden;
+    background: var(--verde-escuro-1);
+    margin: 0 -20px;
+    padding: 0 20px 36px;
   }
 
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -30px; right: -30px;
-    width: 160px; height: 160px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(110,220,100,0.12) 0%, transparent 70%);
+  .hero-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    position: relative;
+    z-index: 1;
   }
 
   .saudacao {
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 700;
     color: var(--verde-claro-1);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-bottom: 10px;
   }
 
-  .hero h1 {
-    font-size: clamp(24px, 6vw, 32px);
+  .hero-card h1 {
+    font-size: clamp(22px, 5.5vw, 28px);
     font-weight: 900;
-    line-height: 1.15;
-    margin-bottom: 16px;
+    line-height: 1.2;
+    color: #ffffff;
+    margin-bottom: 14px;
   }
 
-  .hero h1 em {
+  .hero-card h1 em {
     font-style: normal;
-    color: var(--amarelo);
+    color: var(--verde-claro-1);
   }
 
-  .hero p {
-    font-size: 15px;
-    line-height: 1.65;
-    color: var(--texto-suave);
-    max-width: 500px;
+  .hero-card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.72);
   }
 
-  .hero p strong {
-    color: var(--branco);
+  .hero-card p strong {
+    color: #ffffff;
     font-weight: 700;
   }
+
+  .nota-outorgado {
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.05);
+    border-left: 3px solid var(--verde-claro-1);
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+  }
+
+  .nota-outorgado strong { color: rgba(255,255,255,0.9); }
 
   /* ── SECTION LABEL ── */
   .section-label {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 44px 0 20px;
+    margin: 40px 0 20px;
   }
 
   .section-label .line {
     flex: 1;
     height: 1px;
-    background: var(--card-border);
+    background: var(--border);
   }
 
   .section-label span {
@@ -165,162 +181,289 @@
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--verde-claro-1);
+    color: var(--texto-muito-suave);
     white-space: nowrap;
   }
 
-  /* ── CARDS DE CAMPO (accordion) ── */
-  .campo-card {
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius-sm);
-    background: var(--card-bg);
-    margin-bottom: 10px;
+  /* ── INTRO SAIBA MAIS ── */
+  .intro-saiba {
+    font-size: 14px;
+    color: var(--texto-suave);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  /* ── GRUPO CARD (nível 2) ── */
+  .grupo-card {
+    background: var(--bg-grupo);
+    border: 1px solid var(--border-grupo);
+    border-radius: var(--radius);
+    margin-bottom: 14px;
+    box-shadow: var(--shadow-grupo);
     overflow: hidden;
-    transition: border-color 0.25s;
   }
 
-  .campo-card:hover {
-    border-color: rgba(110,220,100,0.38);
-  }
-
-  .campo-header {
+  .grupo-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 16px 18px;
+    gap: 14px;
+    padding: 20px 20px;
     cursor: pointer;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
   }
 
-  .campo-icon {
+  .grupo-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--verde-claro-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .grupo-card.open .grupo-icon-wrap {
+    background: var(--verde-escuro-2);
+  }
+
+  .grupo-icon {
     font-family: 'Material Symbols Rounded';
-    font-size: 20px;
-    color: var(--verde-claro-1);
+    font-size: 22px;
+    color: var(--verde-escuro-2);
+    font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    transition: color 0.2s;
+  }
+
+  .grupo-card.open .grupo-icon {
+    color: #ffffff;
+  }
+
+  .grupo-texto {
+    flex: 1;
+  }
+
+  .grupo-titulo {
+    font-size: 17px;
+    font-weight: 900;
+    color: var(--texto);
+    line-height: 1.2;
+    margin-bottom: 3px;
+  }
+
+  .grupo-subtitulo {
+    font-size: 13px;
+    color: var(--texto-suave);
+    line-height: 1.4;
+  }
+
+  .grupo-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--texto-muito-suave);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 3px 10px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .grupo-chevron {
+    font-family: 'Material Symbols Rounded';
+    font-size: 22px;
+    color: var(--texto-muito-suave);
+    transition: transform 0.28s ease;
+    flex-shrink: 0;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+
+  .grupo-card.open .grupo-chevron {
+    transform: rotate(180deg);
+    color: var(--verde-escuro-2);
+  }
+
+  /* ── GRUPO BODY (campos) ── */
+  .grupo-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .grupo-card.open .grupo-body {
+    max-height: 2000px;
+  }
+
+  .grupo-body-inner {
+    border-top: 1px solid var(--border);
+    padding: 12px 16px 16px;
+    background: #f6fbf7;
+  }
+
+  .grupo-desc-bloco {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--texto-suave);
+    padding: 10px 4px 14px;
+  }
+
+  /* ── CAMPO ITEM (nível 3 — nome) ── */
+  .campo-item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: #ffffff;
+    margin-bottom: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .campo-item:last-child { margin-bottom: 0; }
+
+  .campo-item:hover {
+    border-color: var(--verde-escuro-2);
+    box-shadow: 0 2px 8px rgba(25,65,45,0.08);
+  }
+
+  .campo-item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 14px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .campo-item-icon {
+    font-family: 'Material Symbols Rounded';
+    font-size: 18px;
+    color: var(--verde-escuro-2);
     flex-shrink: 0;
     font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
   }
 
-  .campo-nome {
+  .campo-item-nome {
     flex: 1;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
+    color: var(--texto);
     line-height: 1.3;
-    color: var(--branco);
   }
 
-  .campo-chevron {
+  .campo-item-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+
+  .campo-item-tag.essencial {
+    background: rgba(25,113,45,0.1);
+    color: var(--verde-escuro-2);
+  }
+
+  .campo-item-tag.opcional {
+    background: rgba(200,168,0,0.1);
+    color: var(--amarelo);
+  }
+
+  .campo-item-chevron {
     font-family: 'Material Symbols Rounded';
-    font-size: 20px;
-    color: var(--verde-claro-1);
-    transition: transform 0.28s ease;
+    font-size: 18px;
+    color: var(--texto-muito-suave);
+    transition: transform 0.25s ease;
     flex-shrink: 0;
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
   }
 
-  .campo-card.open .campo-chevron {
+  .campo-item.open .campo-item-chevron {
     transform: rotate(180deg);
+    color: var(--verde-escuro-2);
   }
 
-  .campo-body {
+  /* ── CAMPO EXPLICAÇÃO (nível 4) ── */
+  .campo-item-body {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.35s ease, padding 0.25s ease;
-    padding: 0 18px;
+    transition: max-height 0.3s ease;
   }
 
-  .campo-card.open .campo-body {
-    max-height: 600px;
-    padding: 0 18px 18px;
+  .campo-item.open .campo-item-body {
+    max-height: 500px;
   }
 
-  .campo-desc {
-    font-size: 14px;
-    line-height: 1.65;
+  .campo-item-desc {
+    font-size: 13px;
+    line-height: 1.7;
     color: var(--texto-suave);
-    border-top: 1px solid var(--card-border);
-    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    padding: 13px 14px 14px;
+    background: #fafffe;
   }
 
-  .campo-desc strong {
-    color: var(--amarelo);
+  .campo-item-desc p + p { margin-top: 8px; }
+
+  .campo-item-desc strong {
+    color: var(--verde-escuro-1);
     font-weight: 700;
   }
 
-  .campo-desc p + p {
-    margin-top: 10px;
-  }
-
-  .badge-relevancia {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 999px;
-    margin-top: 12px;
-  }
-
-  .badge-relevancia.essencial {
-    background: rgba(110,220,100,0.15);
-    color: var(--verde-claro-1);
-    border: 1px solid rgba(110,220,100,0.3);
-  }
-
-  .badge-relevancia.opcional {
-    background: rgba(255,255,70,0.1);
-    color: var(--amarelo);
-    border: 1px solid rgba(255,255,70,0.25);
-  }
-
-  /* ── FAQ REAL ── */
+  /* ── FAQ ── */
   .faq-card {
-    border: 1px solid var(--card-border);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    background: var(--card-bg);
     margin-bottom: 10px;
     overflow: hidden;
-    transition: border-color 0.25s;
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s;
   }
 
-  .faq-card:hover {
-    border-color: rgba(110,220,100,0.38);
-  }
+  .faq-card:hover { border-color: var(--verde-escuro-2); }
 
   .faq-header {
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    padding: 18px 18px;
+    padding: 17px 18px;
     cursor: pointer;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
   }
 
   .faq-q-icon {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 900;
-    color: var(--amarelo);
-    flex-shrink: 0;
-    margin-top: 1px;
     font-style: italic;
+    color: var(--verde-escuro-2);
+    flex-shrink: 0;
+    margin-top: 2px;
+    width: 20px;
+    height: 20px;
+    background: var(--verde-claro-2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .faq-pergunta {
     flex: 1;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     line-height: 1.35;
-    color: var(--branco);
+    color: var(--texto);
   }
 
   .faq-chevron {
     font-family: 'Material Symbols Rounded';
     font-size: 20px;
-    color: var(--verde-claro-1);
+    color: var(--texto-muito-suave);
     transition: transform 0.28s ease;
     flex-shrink: 0;
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
@@ -328,53 +471,56 @@
 
   .faq-card.open .faq-chevron {
     transform: rotate(180deg);
+    color: var(--verde-escuro-2);
   }
 
   .faq-body {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.35s ease, padding 0.25s ease;
-    padding: 0 18px;
+    transition: max-height 0.35s ease;
   }
 
-  .faq-card.open .faq-body {
-    max-height: 600px;
-    padding: 0 18px 20px;
-  }
+  .faq-card.open .faq-body { max-height: 600px; }
 
   .faq-resp {
-    font-size: 14px;
-    line-height: 1.7;
+    font-size: 13px;
+    line-height: 1.75;
     color: var(--texto-suave);
-    border-top: 1px solid var(--card-border);
-    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    padding: 14px 18px 18px;
   }
 
-  .faq-resp strong {
-    color: var(--branco);
-    font-weight: 700;
-  }
-
-  .faq-resp em {
-    color: var(--verde-claro-1);
-    font-style: normal;
-    font-weight: 600;
-  }
+  .faq-resp p + p { margin-top: 10px; }
+  .faq-resp strong { color: var(--texto); font-weight: 700; }
+  .faq-resp em { color: var(--verde-escuro-2); font-style: normal; font-weight: 600; }
 
   /* ── ACEITE ── */
   .aceite-box {
     margin-top: 44px;
-    border: 1px solid rgba(110,220,100,0.28);
+    background: var(--verde-escuro-1);
     border-radius: var(--radius);
-    background: linear-gradient(135deg, rgba(25,113,45,0.3) 0%, rgba(25,65,45,0.2) 100%);
     padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .aceite-box::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: var(--verde-claro-1);
+    opacity: 0.06;
+    border-radius: 50%;
   }
 
   .aceite-box h3 {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 900;
+    color: #ffffff;
     margin-bottom: 8px;
     line-height: 1.25;
+    position: relative;
   }
 
   .aceite-box h3 em {
@@ -382,37 +528,12 @@
     font-style: normal;
   }
 
-  .aceite-box p {
+  .aceite-box > p {
     font-size: 14px;
     line-height: 1.65;
-    color: var(--texto-suave);
-    margin-bottom: 20px;
-  }
-
-  .aceite-form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .input-field {
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    font-family: 'Figtree', sans-serif;
-    font-size: 15px;
-    color: var(--branco);
-    width: 100%;
-    transition: border-color 0.2s;
-    outline: none;
-  }
-
-  .input-field::placeholder { color: rgba(255,255,255,0.35); }
-
-  .input-field:focus {
-    border-color: var(--verde-claro-1);
-    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 22px;
+    position: relative;
   }
 
   .check-row {
@@ -420,18 +541,18 @@
     align-items: flex-start;
     gap: 12px;
     cursor: pointer;
+    margin-bottom: 16px;
+    position: relative;
   }
 
-  .check-row input[type="checkbox"] {
-    display: none;
-  }
+  .check-row input[type="checkbox"] { display: none; }
 
   .custom-check {
-    width: 22px;
-    height: 22px;
-    border-radius: 6px;
-    border: 2px solid rgba(110,220,100,0.5);
-    background: rgba(255,255,255,0.05);
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    border: 2px solid rgba(110,220,100,0.45);
+    background: rgba(255,255,255,0.07);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -463,18 +584,18 @@
   .check-label {
     font-size: 14px;
     line-height: 1.55;
-    color: var(--texto-suave);
+    color: rgba(255,255,255,0.72);
     flex: 1;
   }
 
-  .check-label strong { color: var(--branco); }
+  .check-label strong { color: #ffffff; }
 
   .btn-aceite {
     background: var(--verde-claro-1);
     color: var(--verde-escuro-1);
     border: none;
     border-radius: var(--radius-sm);
-    padding: 16px 24px;
+    padding: 17px 24px;
     font-family: 'Figtree', sans-serif;
     font-size: 15px;
     font-weight: 900;
@@ -486,48 +607,60 @@
     transition: all 0.2s;
     width: 100%;
     letter-spacing: 0.02em;
+    position: relative;
   }
 
   .btn-aceite:hover:not(:disabled) {
     background: #82e878;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(110,220,100,0.35);
   }
 
   .btn-aceite:disabled {
-    opacity: 0.45;
+    opacity: 0.4;
     cursor: not-allowed;
   }
 
-  .btn-aceite .btn-icon {
+  .btn-icon {
     font-family: 'Material Symbols Rounded';
     font-size: 20px;
     font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 20;
   }
 
-  /* ── STATUS DE ENVIO ── */
-  .status-msg {
+  .spinner {
+    width: 18px; height: 18px;
+    border: 2.5px solid rgba(25,65,45,0.25);
+    border-top-color: var(--verde-escuro-1);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
     display: none;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .status-msg {
     align-items: center;
     gap: 10px;
     padding: 14px 16px;
     border-radius: var(--radius-sm);
     font-size: 14px;
     font-weight: 600;
-    margin-top: 4px;
+    margin-top: 12px;
+    display: none;
   }
 
+  .status-msg.show { display: flex; }
+
   .status-msg.success {
-    background: rgba(110,220,100,0.12);
+    background: rgba(110,220,100,0.15);
     border: 1px solid rgba(110,220,100,0.3);
     color: var(--verde-claro-1);
-    display: flex;
   }
 
   .status-msg.error {
     background: rgba(255,100,100,0.1);
     border: 1px solid rgba(255,100,100,0.25);
     color: #ff9b9b;
-    display: flex;
   }
 
   .status-icon {
@@ -540,331 +673,389 @@
   footer {
     margin-top: 56px;
     padding: 24px 0 0;
-    border-top: 1px solid var(--card-border);
+    border-top: 1px solid var(--border);
     text-align: center;
   }
 
-  footer .footer-logo {
-    font-size: 10px;
-    letter-spacing: 0.12em;
+  footer .footer-brand {
+    font-size: 11px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-    margin-bottom: 6px;
+    color: var(--texto-muito-suave);
+    font-weight: 700;
+    margin-bottom: 5px;
   }
 
   footer p {
-    font-size: 12px;
-    color: rgba(255,255,255,0.25);
-    line-height: 1.6;
+    font-size: 11px;
+    color: var(--texto-muito-suave);
+    line-height: 1.7;
   }
 
-  /* ── NOTA OUTORGADO ── */
-  .nota-outorgado {
-    margin-top: 20px;
-    padding: 16px 18px;
-    border-radius: var(--radius-sm);
-    background: rgba(255,255,255,0.04);
-    border-left: 3px solid var(--verde-claro-1);
-    font-size: 13px;
-    color: var(--texto-suave);
-    line-height: 1.6;
-  }
-
-  .nota-outorgado strong { color: var(--branco); }
-
-  /* ── ANIMAÇÕES ── */
+  /* ── ANIMAÇÃO ENTRADA ── */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
+    from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .hero { animation: fadeUp 0.55s ease both; }
-  .section-label { animation: fadeUp 0.55s ease 0.1s both; }
-
-  /* loading spinner */
-  .spinner {
-    width: 18px; height: 18px;
-    border: 2px solid rgba(25,65,45,0.3);
-    border-top-color: var(--verde-escuro-1);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    display: none;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
+  .hero-card { animation: fadeUp 0.5s ease both; }
 </style>
 </head>
 <body>
-<div class="bg-stripes" aria-hidden="true"></div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <img src="logo.png" alt="nobs" class="logo-img">
+    <div class="tagline">sem pedras no caminho</div>
+  </div>
+</header>
 
 <div class="wrap">
 
-  <!-- HEADER -->
-  <header>
-    <svg class="logo-svg" viewBox="0 0 220 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="nobs">
-      <!-- Símbolo "n" estilizado -->
-      <path d="M12 48 C12 48 10 22 24 16 C38 10 40 26 40 36 L40 48" stroke="#6edc64" stroke-width="5" stroke-linecap="round" fill="none"/>
-      <path d="M40 36 C40 26 44 14 56 14 C68 14 68 30 68 48" stroke="#6edc64" stroke-width="5" stroke-linecap="round" fill="none"/>
-      <!-- OBS -->
-      <text x="82" y="48" font-family="Figtree, sans-serif" font-weight="900" font-size="38" fill="white" letter-spacing="-1">OBS</text>
-    </svg>
-    <div class="tagline">sem pedras no caminho</div>
-  </header>
-
   <!-- HERO -->
-  <section class="hero" id="topo">
-    <div class="saudacao" id="saudacao-nome">Olá, doutor(a)!</div>
-    <h1>Entenda a procuração<br>que você <em>irá outorgar.</em></h1>
-    <p>
-      Você assinou eletronicamente o nosso contrato de prestação de serviços, que comenta sobre a importância da autorização de procuração para o e-CAC.
-      Este conteúdo foi criado <strong>explicar, de forma simples e transparente</strong>, o que cada permissão significa e por que ela é necessária para recuperar o seu INSS.
-    </p>
-    <div class="nota-outorgado">
-      <strong>Outorgado:</strong> Maqrec Recuperadora de Contribuições e Créditos LTDA — CNPJ 27.677.082/0001-60
+  <div class="hero">
+    <div class="hero-card">
+      <div class="saudacao" id="saudacao-nome">Olá, doutor(a)!</div>
+      <h1>Entenda a procuração<br>que você <em>irá outorgar.</em></h1>
+      <p>
+        Você assinou nosso contrato de prestação de serviços, que menciona a procuração eletrônica no e-CAC.
+        Esta página foi criada para <strong>explicar de forma simples e transparente</strong> o que cada permissão significa
+        e por que ela é necessária para recuperar o seu INSS.
+      </p>
+      <div class="nota-outorgado">
+        <strong>Outorgado:</strong> Maqrec Recuperadora de Contribuições e Créditos LTDA — CNPJ 27.677.082/0001-60
+      </div>
     </div>
-  </section>
+  </div>
 
-  <!-- SEÇÃO: CAMPOS DA PROCURAÇÃO -->
+  <!-- SEÇÃO GRUPOS -->
   <div class="section-label">
     <div class="line"></div>
-    <span>O que cada campo significa</span>
+    <span>O que autorizamos e por quê</span>
     <div class="line"></div>
   </div>
 
-  <p style="font-size:14px; color: var(--texto-suave); margin-bottom: 20px; line-height: 1.6;">
-    Toque em cada campo para ver uma explicação clara do que ele autoriza e por que precisamos dele.
+  <p class="intro-saiba">
+    A procuração agrupa os acessos em três finalidades. Toque em cada grupo para ver os campos envolvidos — e em cada campo para entender o que ele significa.
   </p>
 
-  <!-- CAMPOS ACCORDION -->
-  <div id="campos-container">
-
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">swap_horiz</span>
-        <span class="campo-nome">Acessar PER/DCOMP WEB</span>
-        <span class="campo-chevron">expand_more</span>
+  <!-- ════════════════════════════════════
+       GRUPO 1 — TRANSMITIR
+  ════════════════════════════════════ -->
+  <div class="grupo-card" id="grupo-transmitir">
+    <div class="grupo-header" onclick="toggleGrupo('grupo-transmitir')">
+      <div class="grupo-icon-wrap">
+        <span class="grupo-icon">send</span>
       </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Permite transmitir, retificar e acompanhar pedidos de compensação e restituição junto à Receita Federal.</p>
-          <p><strong>Por que precisamos?</strong> É aqui onde o crédito identificado na sua análise se transforma em dinheiro restituído ou em compensação de tributos. Sem este acesso, não conseguimos protocolar o seu pedido.</p>
-          <span class="badge-relevancia essencial">● Essencial para o processo</span>
+      <div class="grupo-texto">
+        <div class="grupo-titulo">Transmitir</div>
+        <div class="grupo-subtitulo">Protocolar e enviar seu pedido à Receita</div>
+      </div>
+      <span class="grupo-badge">2 campos</span>
+      <span class="grupo-chevron">expand_more</span>
+    </div>
+    <div class="grupo-body">
+      <div class="grupo-body-inner">
+        <div class="grupo-desc-bloco">
+          Esses campos permitem que a nobs <strong>envie e gerencie oficialmente</strong> o seu pedido de restituição de INSS junto à Receita Federal. Sem eles, não é possível dar início ao processo.
         </div>
+
+        <!-- Campo: PER/DCOMP WEB -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">swap_horiz</span>
+            <span class="campo-item-nome">Acessar PER/DCOMP WEB</span>
+            <span class="campo-item-tag essencial">Essencial</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Permite transmitir, retificar e acompanhar pedidos de compensação e restituição junto à Receita Federal.</p>
+              <p><strong>Por que precisamos?</strong> É onde o crédito identificado na sua análise se transforma em dinheiro restituído ou em compensação de tributos. Sem este acesso, não conseguimos protocolar o seu pedido.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campo: Fontes Pagadoras -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">payments</span>
+            <span class="campo-item-nome">Fontes Pagadoras</span>
+            <span class="campo-item-tag essencial">Essencial</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Consulta rendimentos informados por terceiros — hospitais, clínicas, planos de saúde — à Receita Federal via DIRF ou eSocial.</p>
+              <p><strong>Por que precisamos?</strong> Fazemos o cruzamento desses dados com seu histórico de contribuições para identificar e comprovar as concomitâncias, que são a base do pedido de restituição.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
+  </div>
 
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">inbox</span>
-        <span class="campo-nome">Caixa Postal – Mensagens</span>
-        <span class="campo-chevron">expand_more</span>
+  <!-- ════════════════════════════════════
+       GRUPO 2 — ACOMPANHAR
+  ════════════════════════════════════ -->
+  <div class="grupo-card" id="grupo-acompanhar">
+    <div class="grupo-header" onclick="toggleGrupo('grupo-acompanhar')">
+      <div class="grupo-icon-wrap">
+        <span class="grupo-icon">radar</span>
       </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Acesso às comunicações gerais que a Receita Federal envia para o seu cadastro fiscal.</p>
-          <p><strong>Por que precisamos?</strong> Monitoramos avisos que possam impactar o andamento do seu processo. Avisos não lidos podem gerar consequências sem que você perceba.</p>
-          <span class="badge-relevancia essencial">● Essencial para o processo</span>
+      <div class="grupo-texto">
+        <div class="grupo-titulo">Acompanhar</div>
+        <div class="grupo-subtitulo">Monitorar o processo do início ao fim</div>
+      </div>
+      <span class="grupo-badge">10 campos</span>
+      <span class="grupo-chevron">expand_more</span>
+    </div>
+    <div class="grupo-body">
+      <div class="grupo-body-inner">
+        <div class="grupo-desc-bloco">
+          Esses campos permitem que a nobs <strong>monitore tudo que acontece com seu processo</strong> — comunicações, prazos, decisões e andamentos. Prazo perdido aqui pode significar encerramento do caso.
         </div>
+
+        <!-- Campo: Caixa Postal Mensagens -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">inbox</span>
+            <span class="campo-item-nome">Caixa Postal – Mensagens</span>
+            <span class="campo-item-tag essencial">Essencial</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Acesso às comunicações gerais que a Receita Federal envia ao seu cadastro fiscal.</p>
+              <p><strong>Por que precisamos?</strong> Monitoramos avisos que possam impactar o andamento. Avisos não lidos podem gerar consequências sem que você perceba.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campo: DTE -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">home_pin</span>
+            <span class="campo-item-nome">Caixa Postal – Domicílio Tributário Eletrônico (DTE)</span>
+            <span class="campo-item-tag essencial">Essencial</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Gerencia a adesão ao DTE — canal oficial de intimações formais da Receita Federal.</p>
+              <p><strong>Por que precisamos?</strong> O DTE define se o Fisco te intima por e-CAC ou por correios. Isso tem impacto direto em prazos legais. Monitoramos para que você não perca nenhum prazo.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campo: Compensação de Ofício -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">sync_alt</span>
+            <span class="campo-item-nome">Comunicação para Compensação de Ofício</span>
+            <span class="campo-item-tag essencial">Essencial</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Acesso a comunicações sobre situações em que a Receita usa seus créditos para quitar débitos automaticamente, sem aviso prévio.</p>
+              <p><strong>Por que precisamos?</strong> Se a Receita compensar um crédito que aguardávamos, precisamos saber imediatamente para ajustar a estratégia e evitar que seu crédito suma sem controle.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campo: CHATRFB -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">chat</span>
+            <span class="campo-item-nome">CHATRFB – Todos os serviços do canal de atendimento</span>
+            <span class="campo-item-tag essencial">Operacional</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Acesso ao chat oficial da Receita Federal para atendimento administrativo em nosso nome.</p>
+              <p><strong>Por que precisamos?</strong> Usado quando há necessidade de esclarecimentos administrativos rápidos. Não tem efeito jurídico direto.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campo: Processos Digitais -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">folder_open</span>
+            <span class="campo-item-nome">Processos Digitais e Requerimentos WEB</span>
+            <span class="campo-item-tag essencial">Essencial</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Acesso ao Dossiê Digital de Atendimento (DDA) para abrir, acompanhar e responder processos administrativos.</p>
+              <p><strong>Por que precisamos?</strong> É o canal oficial de peticionamento. Pelo DDA protocolamos recursos e respondemos solicitações em seu nome. Essencial para o andamento do seu caso.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campo: Análise Preliminar -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">preview</span>
+            <span class="campo-item-nome">PER/DCOMP – Consulta Análise Preliminar / Autorregularização</span>
+            <span class="campo-item-tag essencial">Essencial</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Permite ver pendências identificadas pela Receita antes da análise definitiva do pedido.</p>
+              <p><strong>Por que precisamos?</strong> Conseguimos corrigir erros antes que o pedido seja formalmente indeferido. É uma oportunidade de ajuste que não pode ser desperdiçada.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campo: Despacho Decisório -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">gavel</span>
+            <span class="campo-item-nome">PER/DCOMP – Consulta Despacho Decisório</span>
+            <span class="campo-item-tag essencial">Essencial</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Acesso à decisão final da Receita sobre o pedido de compensação ou restituição.</p>
+              <p><strong>Por que precisamos?</strong> É onde sabemos se o pedido foi deferido, indeferido ou homologado. A partir dessa decisão, definimos os próximos passos com você.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campo: Intimação -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">notification_important</span>
+            <span class="campo-item-nome">PER/DCOMP – Consulta Intimação</span>
+            <span class="campo-item-tag essencial">Crítico</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Consulta intimações formais relacionadas ao seu pedido PER/DCOMP.</p>
+              <p><strong>Por que precisamos?</strong> Intimações geram prazo legal para resposta — perder esse prazo pode encerrar o processo. Monitoramos em tempo real para que isso nunca aconteça.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campo: Processamento -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">track_changes</span>
+            <span class="campo-item-nome">PER/DCOMP – Consulta Processamento</span>
+            <span class="campo-item-tag essencial">Essencial</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Acompanha o status operacional do pedido: em análise, processado, pendente de informação etc.</p>
+              <p><strong>Por que precisamos?</strong> Monitoramento contínuo do andamento. É com esse acesso que conseguimos te manter informado sobre onde está o seu processo.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campo: Situação Fiscal -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">manage_search</span>
+            <span class="campo-item-nome">Situação Fiscal do Contribuinte</span>
+            <span class="campo-item-tag essencial">Essencial</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Visão consolidada de pendências, débitos e regularidade fiscal do contribuinte.</p>
+              <p><strong>Por que precisamos?</strong> É o "raio-X" fiscal completo. Nenhum pedido é protocolado sem antes entender o contexto fiscal completo — é a base de qualquer estratégia.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
+  </div>
 
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">home_pin</span>
-        <span class="campo-nome">Caixa Postal – Domicílio Tributário Eletrônico (DTE)</span>
-        <span class="campo-chevron">expand_more</span>
+  <!-- ════════════════════════════════════
+       GRUPO 3 — DÉBITOS
+  ════════════════════════════════════ -->
+  <div class="grupo-card" id="grupo-debitos">
+    <div class="grupo-header" onclick="toggleGrupo('grupo-debitos')">
+      <div class="grupo-icon-wrap">
+        <span class="grupo-icon">account_balance</span>
       </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Permite gerenciar a adesão ao Domicílio Tributário Eletrônico — o canal oficial de intimações formais da Receita Federal.</p>
-          <p><strong>Por que precisamos?</strong> O DTE define se o Fisco te intima por e-CAC ou por correios. Isso tem impacto direto em prazos legais. Precisamos monitorar eventuais intimações para que você não perca nenhum prazo sem saber.</p>
-          <span class="badge-relevancia essencial">● Essencial para o processo</span>
+      <div class="grupo-texto">
+        <div class="grupo-titulo">Débitos</div>
+        <div class="grupo-subtitulo">Panorama de débitos e pagamentos existentes</div>
+      </div>
+      <span class="grupo-badge">3 campos</span>
+      <span class="grupo-chevron">expand_more</span>
+    </div>
+    <div class="grupo-body">
+      <div class="grupo-body-inner">
+        <div class="grupo-desc-bloco">
+          Esses campos são <strong>opcionais</strong> — usados para consulta e apoio estratégico. Servem para entender o panorama completo da sua situação antes de agir. Nenhuma ação é tomada sem comunicação prévia.
         </div>
+
+        <!-- Campo: Comprovante de Arrecadação -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">receipt_long</span>
+            <span class="campo-item-nome">Pagamentos – Comprovante de Arrecadação</span>
+            <span class="campo-item-tag opcional">Opcional</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Permite consultar e emitir comprovantes de pagamentos realizados (DARF, GPS e outros guias).</p>
+              <p><strong>Por que precisamos?</strong> Os comprovantes funcionam como prova das contribuições realizadas — são a base documental para sustentar o pedido perante a Receita.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campo: Parcelamento -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">calendar_month</span>
+            <span class="campo-item-nome">Parcelamento – Solicitar e Acompanhar</span>
+            <span class="campo-item-tag opcional">Opcional</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Autoriza verificar e acompanhar eventuais parcelamentos tributários existentes.</p>
+              <p><strong>Por que precisamos?</strong> Apenas para consulta — para entender o panorama fiscal completo. Qualquer decisão sobre parcelamento é sempre comunicada e decidida com você antes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campo: PGFN -->
+        <div class="campo-item" onclick="toggleCampo(this)">
+          <div class="campo-item-header">
+            <span class="campo-item-icon">balance</span>
+            <span class="campo-item-nome">PGFN – Débitos Inscritos (a partir de 01/11/2012)</span>
+            <span class="campo-item-tag opcional">Opcional</span>
+            <span class="campo-item-chevron">expand_more</span>
+          </div>
+          <div class="campo-item-body">
+            <div class="campo-item-desc">
+              <p>Acesso a débitos já encaminhados à Procuradoria-Geral da Fazenda Nacional (dívida ativa).</p>
+              <p><strong>Por que precisamos?</strong> Em alguns casos, compensação pode ser mais vantajosa do que aguardar cobranças judiciais. Consultamos para ter o quadro completo — sempre com você na decisão.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
+  </div>
 
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">sync_alt</span>
-        <span class="campo-nome">Comunicação para Compensação de Ofício</span>
-        <span class="campo-chevron">expand_more</span>
-      </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Dá acesso a comunicações sobre situações em que a Receita Federal usa créditos seus para quitar débitos automaticamente — sem aviso prévio.</p>
-          <p><strong>Por que precisamos?</strong> Se a Receita compensar um crédito que estávamos aguardando, precisamos saber imediatamente para ajustar a estratégia e evitar que seu crédito "suma" sem controle.</p>
-          <span class="badge-relevancia essencial">● Essencial para o processo</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">chat</span>
-        <span class="campo-nome">CHATRFB – Atendimento da Receita Federal</span>
-        <span class="campo-chevron">expand_more</span>
-      </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Acesso ao canal de chat oficial da Receita Federal para atendimento administrativo em nome do contribuinte.</p>
-          <p><strong>Por que precisamos?</strong> Utilizado apenas operacionalmente quando há necessidade de esclarecimentos administrativos rápidos. Não tem efeito jurídico direto.</p>
-          <span class="badge-relevancia essencial">● Suporte operacional</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">payments</span>
-        <span class="campo-nome">Fontes Pagadoras</span>
-        <span class="campo-chevron">expand_more</span>
-      </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Consulta rendimentos informados por terceiros (hospitais, clínicas, planos de saúde, etc.) à Receita Federal via DIRF ou eSocial.</p>
-          <p><strong>Por que precisamos?</strong> Fazemos o cruzamento desses dados com seu histórico de contribuições para identificar e comprovar as concomitâncias — que são a base do seu pedido de restituição.</p>
-          <span class="badge-relevancia essencial">● Essencial para o processo</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">receipt_long</span>
-        <span class="campo-nome">Pagamentos – Comprovante de Arrecadação</span>
-        <span class="campo-chevron">expand_more</span>
-      </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Permite consultar e emitir comprovantes de pagamentos realizados (DARF, GPS e outros guias).</p>
-          <p><strong>Por que precisamos?</strong> Os comprovantes funcionam como prova das contribuições realizadas. São a base documental para sustentar o pedido de restituição perante a Receita.</p>
-          <span class="badge-relevancia opcional">○ Suporte complementar</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">calendar_month</span>
-        <span class="campo-nome">Parcelamento – Solicitar e Acompanhar</span>
-        <span class="campo-chevron">expand_more</span>
-      </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Autoriza verificar e acompanhar eventuais parcelamentos tributários existentes.</p>
-          <p><strong>Por que precisamos?</strong> Utilizamos apenas para consulta, para entender o panorama fiscal completo. Qualquer decisão sobre parcelamento é sempre comunicada e decidida com você.</p>
-          <span class="badge-relevancia opcional">○ Apenas consulta</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">folder_open</span>
-        <span class="campo-nome">Processos Digitais e Requerimentos WEB</span>
-        <span class="campo-chevron">expand_more</span>
-      </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Acesso ao Dossiê Digital de Atendimento (DDA) — canal formal para abrir, acompanhar e responder processos administrativos junto à Receita Federal.</p>
-          <p><strong>Por que precisamos?</strong> É o canal oficial de peticionamento. Pelo DDA protocolamos recursos, respondemos solicitações e acompanhamos o processo em nome do contribuinte. Altamente relevante para o andamento do seu caso.</p>
-          <span class="badge-relevancia essencial">● Essencial para o processo</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">preview</span>
-        <span class="campo-nome">PER/DCOMP – Consulta Análise Preliminar / Autorregularização</span>
-        <span class="campo-chevron">expand_more</span>
-      </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Permite visualizar pendências identificadas pela Receita antes da análise definitiva do pedido.</p>
-          <p><strong>Por que precisamos?</strong> Conseguimos corrigir eventuais erros antes que o pedido seja formalmente indeferido. É uma oportunidade de ajuste que não pode ser desperdiçada.</p>
-          <span class="badge-relevancia essencial">● Essencial para o processo</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">gavel</span>
-        <span class="campo-nome">PER/DCOMP – Consulta Despacho Decisório</span>
-        <span class="campo-chevron">expand_more</span>
-      </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Acesso à decisão final da Receita Federal sobre o pedido de compensação ou restituição.</p>
-          <p><strong>Por que precisamos?</strong> É aqui que sabemos se o pedido foi deferido, indeferido ou homologado. A partir dessa decisão, definimos os próximos passos junto com você.</p>
-          <span class="badge-relevancia essencial">● Essencial para o processo</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">notification_important</span>
-        <span class="campo-nome">PER/DCOMP – Consulta Intimação</span>
-        <span class="campo-chevron">expand_more</span>
-      </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Consulta intimações formais relacionadas ao seu pedido PER/DCOMP.</p>
-          <p><strong>Por que precisamos?</strong> Intimações geram prazo legal para resposta — e perder esse prazo pode resultar no encerramento do processo. Monitoramos em tempo real para que isso nunca aconteça.</p>
-          <span class="badge-relevancia essencial">● Crítico — gera prazo legal</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">track_changes</span>
-        <span class="campo-nome">PER/DCOMP – Consulta Processamento</span>
-        <span class="campo-chevron">expand_more</span>
-      </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Acompanha o status operacional do pedido: em análise, processado, pendente de informação, etc.</p>
-          <p><strong>Por que precisamos?</strong> Monitoramento contínuo do andamento. É com esse acesso que conseguimos te manter informado sobre onde está o seu processo a qualquer momento.</p>
-          <span class="badge-relevancia essencial">● Essencial para o processo</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">account_balance</span>
-        <span class="campo-nome">PGFN – Débitos Inscritos (a partir de 01/11/2012)</span>
-        <span class="campo-chevron">expand_more</span>
-      </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Acesso a débitos já encaminhados à Procuradoria-Geral da Fazenda Nacional (dívida ativa).</p>
-          <p><strong>Por que precisamos?</strong> Importante para entender o panorama completo. Em alguns casos, a estratégia de compensação pode ser mais vantajosa do que aguardar cobranças judiciais. Sempre consultamos antes de qualquer decisão com você.</p>
-          <span class="badge-relevancia opcional">○ Apoio estratégico</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="campo-card" onclick="toggleCampo(this)">
-      <div class="campo-header">
-        <span class="campo-icon">manage_search</span>
-        <span class="campo-nome">Situação Fiscal do Contribuinte</span>
-        <span class="campo-chevron">expand_more</span>
-      </div>
-      <div class="campo-body">
-        <div class="campo-desc">
-          <p>Visão consolidada de todas as pendências, débitos e regularidade fiscal do contribuinte.</p>
-          <p><strong>Por que precisamos?</strong> É o "raio-X" fiscal completo. Usamos para validar qualquer estratégia antes de agir — nenhum pedido é protocolado sem antes entender o contexto fiscal completo.</p>
-          <span class="badge-relevancia essencial">● Essencial para o processo</span>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /campos-container -->
-
-  <!-- SEÇÃO: FAQ REAL -->
+  <!-- SEÇÃO FAQ -->
   <div class="section-label">
     <div class="line"></div>
     <span>Perguntas frequentes</span>
@@ -881,8 +1072,8 @@
       </div>
       <div class="faq-body">
         <div class="faq-resp">
-          <p>O processo de recuperação de contribuições previdenciárias junto à Receita Federal é burocrático e pode levar <strong>de 1 a 3 anos</strong> — desde o protocolo do pedido até a efetiva restituição ou compensação.</p>
-          <p>A procuração com vigência estendida garante que não precisemos interromper o processo nem solicitar que você assine novamente a cada etapa. O objetivo é justamente <em>poupar o seu tempo</em> — que é o que a nobs promete.</p>
+          <p>O processo de recuperação de contribuições previdenciárias pode levar <strong>de 1 a 3 anos</strong> — desde o protocolo até a efetiva restituição ou compensação.</p>
+          <p>A vigência estendida garante que não precisemos interromper o processo nem pedir que você assine novamente a cada etapa. O objetivo é <em>poupar o seu tempo</em> — que é exatamente o que a nobs promete.</p>
           <p>Você pode revogar a procuração a qualquer momento pelo próprio e-CAC, caso deseje encerrar a parceria.</p>
         </div>
       </div>
@@ -896,9 +1087,9 @@
       </div>
       <div class="faq-body">
         <div class="faq-resp">
-          <p>O e-CAC (Centro Virtual de Atendimento ao Contribuinte) é o portal da Receita Federal onde <strong>todo o processo de restituição de INSS acontece</strong>. Não existe outro caminho oficial.</p>
-          <p>Sem acesso a esse portal, não conseguimos protocolar o pedido, acompanhar o andamento, responder intimações nem garantir que nenhum prazo seja perdido.</p>
-          <p>Importante: o acesso é feito <em>apenas para fins relacionados ao seu processo</em>, conforme os campos autorizados na procuração — nada além disso. A nobs não acessa dados bancários nem informações fora do escopo tributário autorizado.</p>
+          <p>O e-CAC é o portal da Receita Federal onde <strong>todo o processo de restituição de INSS acontece</strong>. Não existe outro caminho oficial.</p>
+          <p>Sem acesso, não conseguimos protocolar o pedido, acompanhar o andamento nem responder intimações a tempo.</p>
+          <p>O acesso é feito <em>somente para fins relacionados ao seu processo</em>, conforme os campos autorizados. A nobs não acessa dados bancários nem informações fora do escopo tributário autorizado.</p>
         </div>
       </div>
     </div>
@@ -911,100 +1102,97 @@
       </div>
       <div class="faq-body">
         <div class="faq-resp">
-          <p>Os campos marcados como <strong>"Essencial para o processo"</strong> são necessários para que possamos trabalhar tecnicamente no seu caso. Removê-los limitaria nossa capacidade de protocolar, acompanhar ou responder pelo seu pedido.</p>
-          <p>Os campos marcados como <strong>"Apoio estratégico"</strong> ou <strong>"Suporte complementar"</strong> têm papel secundário e podem ser discutidos caso você tenha alguma preocupação específica.</p>
-          <p>Se tiver dúvidas sobre algum campo em particular, entre em contato com o seu consultor. Estamos aqui para explicar sem enrolação.</p>
+          <p>Os campos marcados como <strong>Essencial</strong> são necessários para trabalharmos no seu caso. Removê-los limita nossa capacidade de protocolar, acompanhar ou responder pelo seu pedido.</p>
+          <p>Os campos marcados como <strong>Opcional</strong> têm papel de apoio e podem ser discutidos se você tiver alguma preocupação específica.</p>
+          <p>Dúvidas sobre um campo em particular? <em>Entre em contato com seu consultor.</em> Estamos aqui para explicar, sem enrolação.</p>
         </div>
       </div>
     </div>
 
-  </div><!-- /faq-container -->
+  </div>
 
-  <!-- SEÇÃO: ACEITE -->
+  <!-- ACEITE -->
   <div class="aceite-box" id="aceite">
     <h3>Tudo <em>compreendido.</em><br>Vamos confirmar?</h3>
-    <p>
-      Ao confirmar abaixo, você declara que leu e compreendeu os acessos autorizados pela procuração e concorda com o prosseguimento do processo pela nobs.
-    </p>
-    <div class="aceite-form" id="form-aceite">
-      <input
-        type="tel"
-        class="input-field"
-        id="campo-telefone"
-        placeholder="Seu WhatsApp (ex: 11 9 9999-9999)"
-        inputmode="numeric"
-        maxlength="20"
-      />
-      <label class="check-row" for="check-concordo">
-        <input type="checkbox" id="check-concordo" onchange="verificarBotao()">
-        <span class="custom-check"><span class="check-icon">check</span></span>
-        <span class="check-label">Li e entendi os acessos autorizados pela procuração. <strong>Concordo com o prosseguimento.</strong></span>
-      </label>
-      <button class="btn-aceite" id="btn-enviar" onclick="enviarAceite()" disabled>
-        <span class="btn-icon">verified</span>
-        Confirmar meu entendimento
-        <div class="spinner" id="spinner-btn"></div>
-      </button>
-      <div class="status-msg" id="msg-sucesso" style="display:none;">
-        <span class="status-icon">check_circle</span>
-        Confirmação registrada com sucesso. Obrigado!
-      </div>
-      <div class="status-msg" id="msg-erro" style="display:none;">
-        <span class="status-icon">error</span>
-        Não foi possível registrar. Tente novamente.
-      </div>
+    <p>Ao confirmar abaixo, você declara que leu e compreendeu os acessos autorizados pela procuração e concorda com o prosseguimento do processo pela nobs.</p>
+
+    <label class="check-row" for="check-concordo">
+      <input type="checkbox" id="check-concordo" onchange="verificarBotao()">
+      <span class="custom-check"><span class="check-icon">check</span></span>
+      <span class="check-label">Li e entendi os acessos autorizados. <strong>Concordo com o prosseguimento.</strong></span>
+    </label>
+
+    <button class="btn-aceite" id="btn-enviar" onclick="enviarAceite()" disabled>
+      <span class="btn-icon">verified</span>
+      Confirmar meu entendimento
+      <div class="spinner" id="spinner-btn"></div>
+    </button>
+
+    <div class="status-msg success" id="msg-sucesso">
+      <span class="status-icon">check_circle</span>
+      Confirmação registrada. Obrigado!
+    </div>
+    <div class="status-msg error" id="msg-erro">
+      <span class="status-icon">error</span>
+      Não foi possível registrar. Tente novamente.
     </div>
   </div>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">nobs · sem pedras no caminho</div>
+    <div class="footer-brand">nobs · sem pedras no caminho</div>
     <p>Maqrec Recuperadora de Contribuições e Créditos LTDA<br>CNPJ 27.677.082/0001-60</p>
   </footer>
 
 </div><!-- /wrap -->
 
 <script>
-// ── NOME VIA URL PARAM ──
+// ── NOME VIA URL ──
 (function() {
   const params = new URLSearchParams(window.location.search);
   const nome = params.get('nome');
   if (nome) {
     const el = document.getElementById('saudacao-nome');
-    const nomeFmt = nome.charAt(0).toUpperCase() + nome.slice(1);
-    el.textContent = 'Olá, Dr(a). ' + nomeFmt + '!';
+    const fmt = nome.charAt(0).toUpperCase() + nome.slice(1);
+    el.textContent = 'Olá, Dr(a). ' + fmt + '!';
   }
 })();
 
-// ── ACCORDION CAMPOS ──
-function toggleCampo(card) {
+// ── TOGGLE GRUPO (nível 2) ──
+function toggleGrupo(id) {
+  const card = document.getElementById(id);
   const isOpen = card.classList.contains('open');
-  // Fecha todos
-  document.querySelectorAll('.campo-card.open').forEach(c => c.classList.remove('open'));
+  document.querySelectorAll('.grupo-card.open').forEach(c => c.classList.remove('open'));
   if (!isOpen) card.classList.add('open');
 }
 
-// ── ACCORDION FAQ ──
+// ── TOGGLE CAMPO (nível 3→4) ──
+function toggleCampo(item) {
+  event.stopPropagation();
+  const isOpen = item.classList.contains('open');
+  const grupo = item.closest('.grupo-body-inner');
+  grupo.querySelectorAll('.campo-item.open').forEach(c => c.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ── TOGGLE FAQ ──
 function toggleFaq(card) {
   const isOpen = card.classList.contains('open');
   document.querySelectorAll('.faq-card.open').forEach(c => c.classList.remove('open'));
   if (!isOpen) card.classList.add('open');
 }
 
-// ── HABILITAR BOTÃO ──
+// ── BOTÃO ──
 function verificarBotao() {
   const check = document.getElementById('check-concordo').checked;
   document.getElementById('btn-enviar').disabled = !check;
 }
 
-// ── ENVIO PARA GOOGLE SHEETS ──
-// Substitua a URL abaixo pela URL do seu Google Apps Script após configurar
+// ── APPS SCRIPT URL ──
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyGBrcWI_eoiiKsk-xcsqGmX-2U9_urw9VLgwp1GjqPf5flA4H8QOxM0mqDbucMTUli/exec';
 
 async function enviarAceite() {
-  const telefone = document.getElementById('campo-telefone').value.trim();
-  const check    = document.getElementById('check-concordo').checked;
-
+  const check = document.getElementById('check-concordo').checked;
   if (!check) return;
 
   const btn     = document.getElementById('btn-enviar');
@@ -1012,45 +1200,30 @@ async function enviarAceite() {
   const sucesso = document.getElementById('msg-sucesso');
   const erro    = document.getElementById('msg-erro');
 
-  // Oculta mensagens anteriores
-  sucesso.style.display = 'none';
-  erro.style.display    = 'none';
+  sucesso.classList.remove('show');
+  erro.classList.remove('show');
 
-  // Pega nome da URL
-  const params = new URLSearchParams(window.location.search);
-  const nome   = params.get('nome') || '—';
+  const params    = new URLSearchParams(window.location.search);
+  const nome      = params.get('nome') || '—';
+  const timestamp = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
 
-  btn.disabled  = true;
+  btn.disabled          = true;
   spinner.style.display = 'block';
-
-  // Se URL não foi configurada, apenas confirma localmente
-  if (APPS_SCRIPT_URL === 'SUA_URL_AQUI') {
-    setTimeout(() => {
-      spinner.style.display = 'none';
-      sucesso.style.display = 'flex';
-      btn.style.display     = 'none';
-    }, 800);
-    return;
-  }
 
   try {
     await fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
+      method:  'POST',
+      mode:    'no-cors',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nome:      nome,
-        telefone:  telefone || '—',
-        timestamp: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })
-      })
+      body:    JSON.stringify({ nome, timestamp })
     });
     spinner.style.display = 'none';
-    sucesso.style.display = 'flex';
-    btn.style.display     = 'none';
+    sucesso.classList.add('show');
+    btn.style.display = 'none';
   } catch(e) {
     spinner.style.display = 'none';
-    erro.style.display    = 'flex';
-    btn.disabled          = false;
+    erro.classList.add('show');
+    btn.disabled = false;
   }
 }
 </script>
