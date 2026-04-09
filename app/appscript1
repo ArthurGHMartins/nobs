@@ -1,0 +1,158 @@
+// ============================================================
+//  COLE ESTE CÓDIGO NO APPS SCRIPT DO SEU GOOGLE SHEETS
+//  Menu: Extensões > Apps Script
+// ============================================================
+
+const SHEET_NAME = "Clientes"; // <- nome da aba da sua planilha
+
+function doGet(e) {
+  return HtmlService.createHtmlOutput("API rodando OK");
+}
+
+function doPost(e) {
+  try {
+    const params = JSON.parse(e.postData.contents);
+    const action = params.action;
+
+    if (action === "login") {
+      return responder(loginCliente(params.cpf, params.nascimento));
+    }
+
+    if (action === "getTrabalho") {
+      return responder(getTrabalho(params.cpf, params.codigo));
+    }
+
+    return responder({ erro: "Ação inválida" });
+
+  } catch (err) {
+    return responder({ erro: "Erro interno: " + err.message });
+  }
+}
+
+// ------------------------------------------------------------
+// LOGIN: busca todos os trabalhos do cliente pelo CPF + nasc.
+// ------------------------------------------------------------
+function loginCliente(cpf, nascimento) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+  const dados = sheet.getDataRange().getValues();
+  const cabecalho = dados[0];
+
+  // índices das colunas (baseado no cabeçalho da planilha)
+  const idx = {
+    codigo:              cabecalho.indexOf("Codigo"),
+    nome:                cabecalho.indexOf("Nome"),
+    cpf:                 cabecalho.indexOf("CPF"),
+    nascimento:          cabecalho.indexOf("Data de Nascimento"),
+    estimativa:          cabecalho.indexOf("Estimativa"),
+    auditado:            cabecalho.indexOf("Auditado"),
+    recuperado:          cabecalho.indexOf("Recuperado"),
+    emAnalise:           cabecalho.indexOf("Em Analise"),
+    status:              cabecalho.indexOf("Status"),
+    indicacoes:          cabecalho.indexOf("Indicacoes"),
+    indicacoesFechadas:  cabecalho.indexOf("Indicacoes Fechadas"),
+  };
+
+  // normaliza CPF (remove pontos e traços)
+  const cpfLimpo = cpf.replace(/\D/g, "");
+
+  // normaliza data de nascimento para dd/mm/aaaa
+  const nascLimpo = nascimento.trim();
+
+  const trabalhos = [];
+
+  for (let i = 1; i < dados.length; i++) {
+    const linha = dados[i];
+    const cpfLinha = String(linha[idx.cpf]).replace(/\D/g, "");
+    const nascLinha = formatarData(linha[idx.nascimento]);
+
+    if (cpfLinha === cpfLimpo && nascLinha === nascLimpo) {
+      trabalhos.push({
+        codigo:             linha[idx.codigo],
+        nome:               linha[idx.nome],
+        estimativa:         linha[idx.estimativa],
+        auditado:           linha[idx.auditado],
+        recuperado:         linha[idx.recuperado],
+        emAnalise:          linha[idx.emAnalise],
+        status:             linha[idx.status],
+        indicacoes:         linha[idx.indicacoes],
+        indicacoesFechadas: linha[idx.indicacoesFechadas],
+      });
+    }
+  }
+
+  if (trabalhos.length === 0) {
+    return { erro: "CPF ou data de nascimento incorretos." };
+  }
+
+  return { ok: true, nome: trabalhos[0].nome, trabalhos: trabalhos };
+}
+
+// ------------------------------------------------------------
+// GET TRABALHO: retorna um trabalho específico pelo código
+// ------------------------------------------------------------
+function getTrabalho(cpf, codigo) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+  const dados = sheet.getDataRange().getValues();
+  const cabecalho = dados[0];
+
+  const idx = {
+    codigo:              cabecalho.indexOf("Codigo"),
+    cpf:                 cabecalho.indexOf("CPF"),
+    nome:                cabecalho.indexOf("Nome"),
+    estimativa:          cabecalho.indexOf("Estimativa"),
+    auditado:            cabecalho.indexOf("Auditado"),
+    recuperado:          cabecalho.indexOf("Recuperado"),
+    emAnalise:           cabecalho.indexOf("Em Analise"),
+    status:              cabecalho.indexOf("Status"),
+    indicacoes:          cabecalho.indexOf("Indicacoes"),
+    indicacoesFechadas:  cabecalho.indexOf("Indicacoes Fechadas"),
+  };
+
+  const cpfLimpo = cpf.replace(/\D/g, "");
+
+  for (let i = 1; i < dados.length; i++) {
+    const linha = dados[i];
+    const cpfLinha = String(linha[idx.cpf]).replace(/\D/g, "");
+    if (cpfLinha === cpfLimpo && String(linha[idx.codigo]) === String(codigo)) {
+      return {
+        ok: true,
+        trabalho: {
+          codigo:             linha[idx.codigo],
+          nome:               linha[idx.nome],
+          estimativa:         linha[idx.estimativa],
+          auditado:           linha[idx.auditado],
+          recuperado:         linha[idx.recuperado],
+          emAnalise:          linha[idx.emAnalise],
+          status:             linha[idx.status],
+          indicacoes:         linha[idx.indicacoes],
+          indicacoesFechadas: linha[idx.indicacoesFechadas],
+        }
+      };
+    }
+  }
+
+  return { erro: "Trabalho não encontrado." };
+}
+
+// ------------------------------------------------------------
+// HELPER: formata data para dd/mm/aaaa
+// ------------------------------------------------------------
+function formatarData(valor) {
+  if (!valor) return "";
+  if (valor instanceof Date) {
+    const d = String(valor.getDate()).padStart(2, "0");
+    const m = String(valor.getMonth() + 1).padStart(2, "0");
+    const a = valor.getFullYear();
+    return `${d}/${m}/${a}`;
+  }
+  return String(valor).trim();
+}
+
+// ------------------------------------------------------------
+// HELPER: retorna resposta JSON com CORS liberado
+// ------------------------------------------------------------
+function responder(obj) {
+  const output = ContentService.createTextOutput(JSON.stringify(obj));
+  output.setMimeType(ContentService.MimeType.JSON);
+  return output;
+}
