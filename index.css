@@ -1,0 +1,236 @@
+/* ============================================================
+   TOKENS — espelho fiel do nobs_portal.html
+============================================================ */
+:root {
+  --tr: 0.28s cubic-bezier(.4,0,.2,1);
+}
+
+[data-theme="light"] {
+  --bg:         #f2f2f7;
+  --bg-card:    #ffffff;
+  --bg-input:   #f2f2f7;
+  --bg-pill:    #e8e8ed;
+  --txt1:       #1a1a1e;
+  --txt2:       #6c6c72;
+  --txt3:       #aeaeb2;
+  --accent:     #1a1a1e;
+  --accent-fg:  #ffffff;
+  --border:     #e0e0e5;
+  --green:      #28a745;
+  --green-bg:   #e8f5ea;
+  --amber:      #f59e0b;
+  --amber-bg:   #fef3c7;
+  --blue:       #3b82f6;
+  --blue-bg:    #eff6ff;
+  --red:        #ef4444;
+  --shadow-sm:  0 1px 8px rgba(0,0,0,.06);
+  --shadow-md:  0 4px 24px rgba(0,0,0,.10);
+  --shadow-lg:  0 12px 48px rgba(0,0,0,.14);
+}
+
+[data-theme="dark"] {
+  --bg:         #000000;
+  --bg-card:    #1c1c1e;
+  --bg-input:   #2c2c2e;
+  --bg-pill:    #2c2c2e;
+  --txt1:       #f5f5f7;
+  --txt2:       #98989d;
+  --txt3:       #48484a;
+  --accent:     #f5f5f7;
+  --accent-fg:  #000000;
+  --border:     #2c2c2e;
+  --green:      #30d158;
+  --green-bg:   rgba(48,209,88,.12);
+  --amber:      #ffd60a;
+  --amber-bg:   rgba(255,214,10,.12);
+  --blue:       #0a84ff;
+  --blue-bg:    rgba(10,132,255,.12);
+  --red:        #ff453a;
+  --shadow-sm:  0 1px 8px rgba(0,0,0,.4);
+  --shadow-md:  0 4px 24px rgba(0,0,0,.5);
+  --shadow-lg:  0 12px 48px rgba(0,0,0,.7);
+}
+
+/* ============================================================
+   RESET & BASE
+============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--txt1);
+  min-height: 100%;
+  transition: background var(--tr), color var(--tr);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+h1, h2, h3, .syne {
+  font-family: 'Syne', sans-serif;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+input {
+  font-family: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ============================================================
+   CARD BASE
+============================================================ */
+.card {
+  background: var(--bg-card);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: background var(--tr), border var(--tr);
+}
+
+.card-pad {
+  padding: 20px;
+}
+
+/* ============================================================
+   SECTION LABEL
+============================================================ */
+.sec-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--txt3);
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  margin-bottom: 10px;
+}
+
+/* ============================================================
+   PAGE WRAPPER (padding bottom para nav)
+============================================================ */
+.page-content {
+  flex: 1;
+  padding: 0 0 calc(80px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+}
+
+/* ============================================================
+   PAGE HEADER
+============================================================ */
+.page-header {
+  padding: 56px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.page-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-tag {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--txt3);
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+
+.page-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+
+.page-sub {
+  font-size: 14px;
+  color: var(--txt2);
+  margin-top: 4px;
+}
+
+/* ============================================================
+   BOTÃO PRIMÁRIO
+============================================================ */
+.btn-pri {
+  width: 100%;
+  padding: 16px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: opacity var(--tr), transform var(--tr);
+}
+
+.btn-pri:active {
+  opacity: .8;
+  transform: scale(.98);
+}
+
+.btn-pri:disabled {
+  opacity: .5;
+  pointer-events: none;
+}
+
+/* ============================================================
+   SPINNER
+============================================================ */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  display: none;
+}
+
+.spinner.vis {
+  display: block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   MENSAGEM DE ERRO
+============================================================ */
+.msg-erro {
+  font-size: 13px;
+  color: var(--red);
+  text-align: center;
+  min-height: 18px;
+  transition: opacity .2s;
+}

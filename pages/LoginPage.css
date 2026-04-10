@@ -1,0 +1,127 @@
+.login-page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg);
+  padding: 0 28px 40px;
+}
+
+/* ── Logo: ocupa ~20% da altura da tela ── */
+.login-logo-wrap {
+  height: 20dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-logo {
+  height: 72px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ── Boas vindas ── */
+.login-bv {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--txt1);
+  text-align: center;
+  margin-bottom: 32px;
+  letter-spacing: -0.5px;
+}
+
+/* ── Formulário ── */
+.login-form {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.login-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--txt1);
+  margin-bottom: 4px;
+}
+
+.login-input {
+  width: 100%;
+  padding: 15px 16px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  font-size: 16px;
+  color: var(--txt1);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.login-input:focus {
+  border-color: var(--accent);
+}
+
+.login-input:disabled {
+  opacity: 0.5;
+}
+
+.login-input::placeholder {
+  color: var(--txt3);
+}
+
+/* ── Erro ── */
+.login-erro {
+  font-size: 13px;
+  color: var(--red);
+  text-align: center;
+}
+
+/* ── Botão ── */
+.login-btn {
+  margin-top: 8px;
+  height: 54px;
+  font-size: 16px;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-btn.loading {
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* ── Spinner dentro do botão ── */
+.login-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+/* ── Texto de loading com fade ── */
+.login-msg {
+  font-size: 13px;
+  font-weight: 400;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 240px;
+}
+
+.login-msg.vis {
+  opacity: 1;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
