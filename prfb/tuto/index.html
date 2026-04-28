@@ -1,384 +1,458 @@
 
 
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: var(--font-sans); }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --green-dark: #1a3a2a;
+    --green-mid: #2a5a3a;
+    --green-accent: #4caf7d;
+    --green-light: #e8f5ee;
+    --green-text: #1a6b3a;
+    --amber-bg: #fff8e8;
+    --amber-border: #e8a020;
+    --amber-text: #7a5010;
+  }
+
+  .wrap {
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: var(--font-sans);
+    font-size: 16px;
+  }
 
   .hero {
-    background: #1a3a2a;
-    color: #fff;
-    padding: 2rem 1.25rem 1.5rem;
+    background: var(--green-dark);
+    padding: 2rem 1.5rem 1.75rem;
     text-align: center;
   }
-  .logo-mark {
-    display: inline-flex;
+  .logo-row {
+    display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 1rem;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 1.25rem;
   }
   .logo-icon {
-    width: 36px; height: 36px;
-    background: #4caf7d;
-    border-radius: 8px;
+    width: 40px; height: 40px;
+    background: var(--green-accent);
+    border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 14px; color: #fff; letter-spacing: -0.5px;
+    font-weight: 700; font-size: 15px; color: #fff;
   }
-  .logo-text { font-size: 20px; font-weight: 500; color: #fff; letter-spacing: 0.5px; }
-  .hero h1 { font-size: 17px; font-weight: 500; color: #b8ddc8; line-height: 1.4; }
-  .hero p { font-size: 13px; color: #7aaa90; margin-top: 6px; }
+  .logo-name { font-size: 22px; font-weight: 500; color: #fff; }
+  .hero-title { font-size: 18px; font-weight: 500; color: #b8ddc8; line-height: 1.4; }
+  .hero-sub { font-size: 14px; color: #7aaa90; margin-top: 6px; }
 
-  .progress-bar {
-    background: #2a4a3a;
-    height: 4px;
-    position: relative;
-  }
-  .progress-fill {
-    height: 100%;
-    background: #4caf7d;
-    transition: width 0.4s ease;
-  }
-  .step-counter {
-    background: #f5f7f5;
-    padding: 10px 1.25rem;
+  .progress-wrap { background: #2a4a3a; height: 5px; }
+  .progress-fill { height: 100%; background: var(--green-accent); transition: width 0.4s ease; }
+
+  .step-bar {
+    background: var(--green-light);
+    padding: 10px 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 0.5px solid var(--color-border-tertiary);
+    border-bottom: 0.5px solid #c8e8d8;
   }
-  .step-label { font-size: 12px; color: var(--color-text-secondary); }
-  .step-num { font-size: 13px; font-weight: 500; color: #1a3a2a; }
+  .step-bar-label { font-size: 13px; color: var(--green-text); }
+  .step-bar-num { font-size: 13px; font-weight: 500; color: var(--green-dark); }
 
   .content {
-    padding: 1.5rem 1.25rem;
-    min-height: 280px;
+    padding: 1.75rem 1.5rem 1rem;
+    min-height: 300px;
   }
 
-  .step-tag {
+  .tag {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    background: #e8f5ee;
-    color: #1a6b3a;
-    font-size: 11px;
+    gap: 7px;
+    background: var(--green-light);
+    color: var(--green-text);
+    font-size: 12px;
     font-weight: 500;
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: 20px;
-    margin-bottom: 1rem;
-    letter-spacing: 0.3px;
+    margin-bottom: 1.1rem;
+    letter-spacing: 0.2px;
   }
-  .step-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #4caf7d;
-  }
+  .tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-accent); flex-shrink: 0; }
 
   .step-title {
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 500;
     color: var(--color-text-primary);
     line-height: 1.3;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.9rem;
   }
 
   .step-body {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--color-text-secondary);
-    line-height: 1.65;
+    line-height: 1.7;
   }
 
-  .highlight-box {
-    background: #f0faf4;
-    border-left: 3px solid #4caf7d;
-    border-radius: 0 8px 8px 0;
-    padding: 12px 14px;
-    margin: 1rem 0;
-    font-size: 13px;
-    color: #1a4a2a;
+  .info-box {
+    background: var(--green-light);
+    border-left: 3px solid var(--green-accent);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 16px;
+    margin-top: 1.1rem;
   }
-  .highlight-box strong { font-weight: 500; display: block; margin-bottom: 4px; font-size: 12px; color: #4caf7d; letter-spacing: 0.3px; }
+  .info-box-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--green-accent);
+    letter-spacing: 0.4px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+  }
+  .info-box-val {
+    font-size: 15px;
+    color: var(--green-dark);
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  .obs {
+    background: var(--amber-bg);
+    border-left: 3px solid var(--amber-border);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 14px;
+    margin-top: 1rem;
+    font-size: 13px;
+    color: var(--amber-text);
+    line-height: 1.6;
+  }
 
   .copy-btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    background: #1a3a2a;
+    gap: 7px;
+    background: var(--green-dark);
     color: #fff;
     border: none;
     border-radius: 8px;
-    padding: 8px 14px;
-    font-size: 13px;
+    padding: 10px 16px;
+    font-size: 14px;
     cursor: pointer;
-    margin-top: 8px;
+    margin-top: 10px;
     transition: background 0.2s;
+    min-height: 44px;
   }
-  .copy-btn:hover { background: #2a5a3a; }
-  .copy-btn.copied { background: #4caf7d; }
+  .copy-btn:active { background: var(--green-accent); }
+  .copy-btn.copied { background: var(--green-accent); }
 
-  .service-list {
+  .services {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 7px;
     margin-top: 1rem;
   }
-  .service-item {
+  .svc {
     display: flex;
     align-items: flex-start;
     gap: 10px;
     background: var(--color-background-secondary);
-    border-radius: 8px;
-    padding: 8px 10px;
-    font-size: 12px;
+    border-radius: 10px;
+    padding: 11px 12px;
+    font-size: 14px;
     color: var(--color-text-primary);
     line-height: 1.4;
   }
-  .service-code {
-    background: #e8f5ee;
-    color: #1a6b3a;
-    font-size: 10px;
-    font-weight: 500;
-    padding: 2px 6px;
-    border-radius: 4px;
+  .svc-code {
+    background: var(--green-light);
+    color: var(--green-text);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 7px;
+    border-radius: 5px;
     white-space: nowrap;
     flex-shrink: 0;
     margin-top: 1px;
-  }
-
-  .obs-box {
-    background: #fff8e8;
-    border-left: 3px solid #e8a020;
-    border-radius: 0 8px 8px 0;
-    padding: 10px 12px;
-    font-size: 12px;
-    color: #7a5010;
-    margin-top: 1rem;
-    line-height: 1.5;
+    letter-spacing: 0.3px;
   }
 
   .nav {
     display: flex;
     gap: 10px;
-    padding: 1rem 1.25rem 1.5rem;
+    padding: 1rem 1.5rem 1.75rem;
     border-top: 0.5px solid var(--color-border-tertiary);
   }
   .btn-back {
     flex: 1;
-    padding: 12px;
+    padding: 0 16px;
+    height: 52px;
     border: 0.5px solid var(--color-border-secondary);
-    border-radius: 10px;
+    border-radius: 12px;
     background: transparent;
     color: var(--color-text-secondary);
-    font-size: 14px;
+    font-size: 15px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: background 0.15s;
   }
-  .btn-back:hover { background: var(--color-background-secondary); }
+  .btn-back:active { background: var(--color-background-secondary); }
   .btn-next {
     flex: 2;
-    padding: 12px;
+    height: 52px;
     border: none;
-    border-radius: 10px;
-    background: #1a3a2a;
+    border-radius: 12px;
+    background: var(--green-dark);
     color: #fff;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.15s;
   }
-  .btn-next:hover { background: #2a5a3a; }
+  .btn-next:active { background: var(--green-mid); }
   .btn-link {
     flex: 2;
-    padding: 12px;
+    height: 52px;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     background: #1a6bce;
     color: #fff;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     cursor: pointer;
-    text-align: center;
-    text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
+    text-decoration: none;
   }
+  .btn-link:active { opacity: 0.85; }
 
-  .success-icon {
-    width: 56px; height: 56px;
-    background: #e8f5ee;
+  .success-wrap { text-align: center; padding-top: 0.5rem; }
+  .success-circle {
+    width: 68px; height: 68px;
+    background: var(--green-light);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 24px;
+    font-size: 30px;
     margin: 0 auto 1.25rem;
+    color: var(--green-accent);
   }
-
-  .hidden { display: none; }
+  .success-title { font-size: 20px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+  .success-body { font-size: 14px; color: var(--color-text-secondary); line-height: 1.6; }
+  .success-card {
+    background: var(--green-light);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+  .success-card p { font-size: 14px; color: var(--green-text); line-height: 1.6; }
+  .success-card strong { font-weight: 500; display: block; margin-bottom: 4px; color: var(--green-dark); font-size: 15px; }
 </style>
 
-<div class="hero">
-  <div class="logo-mark">
-    <div class="logo-icon">MQ</div>
-    <span class="logo-text">Maqrec</span>
+<div class="wrap">
+  <div class="hero">
+    <div class="logo-row">
+      <div class="logo-icon">MQ</div>
+      <span class="logo-name">Maqrec</span>
+    </div>
+    <div class="hero-title">Autorização de acesso ao e-CAC</div>
+    <div class="hero-sub">Siga os passos — leva menos de 5 minutos</div>
   </div>
-  <h1>Autorização de acesso ao e-CAC</h1>
-  <p>Siga os passos abaixo — leva menos de 5 minutos</p>
-</div>
 
-<div class="progress-bar">
-  <div class="progress-fill" id="progress" style="width: 9%"></div>
-</div>
+  <div class="progress-wrap">
+    <div class="progress-fill" id="prog" style="width:9%"></div>
+  </div>
 
-<div class="step-counter">
-  <span class="step-label">Progresso</span>
-  <span class="step-num" id="step-counter">Passo 1 de 11</span>
-</div>
+  <div class="step-bar">
+    <span class="step-bar-label" id="step-label">Progresso</span>
+    <span class="step-bar-num" id="step-num">Passo 1 de 11</span>
+  </div>
 
-<div class="content" id="content"></div>
+  <div class="content" id="content"></div>
 
-<div class="nav" id="nav">
-  <button class="btn-back" id="btn-back" onclick="prevStep()">Voltar</button>
-  <button class="btn-next" id="btn-next" onclick="nextStep()">Continuar</button>
+  <div class="nav" id="nav"></div>
 </div>
 
 <script>
 const steps = [
   {
     tag: "Antes de começar",
-    title: "Ative as notificações do app gov.br",
-    body: `Você precisará receber um código de confirmação pelo app gov.br. Por isso, ative as notificações agora.`,
-    extra: `<div class="highlight-box"><strong>Android</strong>Configurações &gt; Aplicativos &gt; gov.br &gt; Permitir notificações</div><div class="highlight-box"><strong>iPhone</strong>Ajustes &gt; gov.br &gt; Notificações &gt; Permitir<br><br>Se usar Safari: Ajustes &gt; Safari &gt; desative "Bloquear Pop-ups"</div>`
+    title: "Ative as notificações do gov.br",
+    body: "Você precisará receber um código pelo app gov.br. Ative as notificações agora para não travar no final.",
+    extras: [
+      { type: "info", label: "Android", val: "Configurações → Aplicativos → gov.br → Permitir notificações" },
+      { type: "info", label: "iPhone", val: "Ajustes → gov.br → Notificações → Permitir notificações" },
+      { type: "info", label: "Safari no iPhone", val: "Ajustes → Safari → desative \"Bloquear Pop-ups\"" }
+    ]
   },
   {
     tag: "Antes de começar",
     title: "Baixe e acesse o app gov.br",
-    body: `Baixe o app gov.br no seu celular (disponível na App Store e Google Play), acesse com seu CPF e senha, e faça a validação facial quando solicitado.`,
-    extra: `<div class="obs-box">A validação facial é obrigatória para atingir o nível de conta necessário para assinar a procuração.</div>`
+    body: "Baixe o app gov.br (App Store ou Google Play). Acesse com seu CPF e senha e faça a validação facial quando solicitado.",
+    extras: [
+      { type: "obs", val: "A validação facial é obrigatória para assinar a procuração." }
+    ]
   },
   {
     tag: "Acessando o e-CAC",
-    title: "Acesse o portal e-CAC",
-    body: `Toque no botão abaixo para abrir o portal e-CAC. Em seguida, clique em "Entrar com GOV.BR" e faça login com seu CPF e senha.`,
-    extra: `<div class="obs-box">Se estiver pelo celular, após entrar procure e clique em <strong>"versão clássica"</strong> na parte inferior da tela.</div>`,
+    title: "Abra o portal e-CAC",
+    body: "Toque no botão abaixo para abrir o e-CAC. Clique em \"Entrar com GOV.BR\" e faça login com seu CPF e senha.",
+    extras: [
+      { type: "obs", val: "Se estiver pelo celular, após entrar clique em \"versão clássica\" na parte inferior da tela." }
+    ],
     link: { url: "https://cav.receita.fazenda.gov.br/autenticacao/login", label: "Abrir o e-CAC" }
   },
   {
-    tag: "Procuração",
-    title: "Acesse Autorizações de Acesso",
-    body: `Após entrar no e-CAC, localize e clique no botão azul:`,
-    extra: `<div class="highlight-box"><strong>O que clicar</strong>Autorizações de Acesso (Procurações)</div><div class="highlight-box"><strong>Em seguida</strong>Minhas Autorizações de Acesso</div>`
+    tag: "Criando a procuração",
+    title: "Vá em Autorizações de Acesso",
+    body: "Após entrar no e-CAC, localize e clique no menu:",
+    extras: [
+      { type: "info", label: "1º clique", val: "Autorizações de Acesso (Procurações)" },
+      { type: "info", label: "2º clique", val: "Minhas Autorizações de Acesso" }
+    ]
   },
   {
-    tag: "Procuração",
+    tag: "Criando a procuração",
     title: "Crie uma nova autorização",
-    body: `Na página "Minhas Autorizações de Acesso", clique novamente em "Entrar com GOV.BR" e depois no botão:`,
-    extra: `<div class="highlight-box"><strong>Botão a clicar</strong>+ Nova Autorização</div>`
+    body: "Na página \"Minhas Autorizações de Acesso\", clique em \"Entrar com GOV.BR\" e em seguida:",
+    extras: [
+      { type: "info", label: "Botão", val: "+ Nova Autorização" }
+    ]
   },
   {
-    tag: "Procuração",
+    tag: "Criando a procuração",
     title: "Informe o CNPJ da Maqrec",
-    body: `No campo "Pessoa Autorizada", digite o CNPJ abaixo. Verifique se o nome da empresa aparece automaticamente.`,
-    extra: `<div class="highlight-box"><strong>CNPJ</strong>27.677.082/0001-60<br><button class="copy-btn" id="cnpj-btn" onclick="copyCNPJ()">Copiar CNPJ</button></div><div class="obs-box">Deve aparecer: <strong>Maqrec Recuperadora de Contribuições e Créditos LTDA</strong>. Se não aparecer, recarregue a página e tente novamente.</div><div class="highlight-box"><strong>Validade</strong>Defina como 15/05/2028 e clique em Avançar</div>`
+    body: "No campo \"Pessoa Autorizada\", digite o nosso CNPJ. Verifique se o nome da empresa aparece abaixo.",
+    extras: [
+      { type: "info", label: "CNPJ", val: "27.677.082/0001-60", copy: true },
+      { type: "obs", val: "Deve aparecer: Maqrec Recuperadora de Contribuições e Créditos LTDA. Se não aparecer, recarregue e tente novamente." },
+      { type: "info", label: "Validade", val: "15/05/2028 — depois clique em Avançar" }
+    ]
   },
   {
-    tag: "Procuração",
+    tag: "Criando a procuração",
     title: "Clique em Selecionar Serviços",
-    body: `Na tela de serviços, clique no botão "Selecionar Serviços". Você irá buscar e marcar cada serviço individualmente pelo código.`,
-    extra: `<div class="obs-box">Faça a busca e marque um serviço por vez, usando os códigos listados no próximo passo.</div>`
+    body: "Na tela de serviços, clique no botão \"Selecionar Serviços\". Você irá buscar e marcar cada item pelo código.",
+    extras: [
+      { type: "obs", val: "Busque e marque um serviço por vez. O próximo passo lista todos os códigos." }
+    ]
   },
   {
-    tag: "Procuração",
+    tag: "Criando a procuração",
     title: "Marque os 13 serviços",
-    body: `Busque cada código abaixo, marque o serviço e confirme. Repita para todos:`,
-    extra: `<div class="service-list">
-      <div class="service-item"><span class="service-code">00143</span>Acessar PER/DCOMP WEB</div>
-      <div class="service-item"><span class="service-code">00006</span>Caixa Postal - Mensagens</div>
-      <div class="service-item"><span class="service-code">00050</span>Caixa Postal - Termo de Opção pelo Domicílio Tributário Eletrônico</div>
-      <div class="service-item"><span class="service-code">00197</span>CHAT RFB e Receita Atende - Todos os serviços</div>
-      <div class="service-item"><span class="service-code">00083</span>Comunicação para Compensação de Ofício</div>
-      <div class="service-item"><span class="service-code">00021</span>Fontes Pagadoras</div>
-      <div class="service-item"><span class="service-code">00085</span>PER/DCOMP - Consulta Análise Preliminar</div>
-      <div class="service-item"><span class="service-code">00025</span>PER/DCOMP - Consulta Despacho Decisório</div>
-      <div class="service-item"><span class="service-code">00086</span>PER/DCOMP - Consulta Intimação</div>
-      <div class="service-item"><span class="service-code">00087</span>PER/DCOMP - Consulta Processamento</div>
-      <div class="service-item"><span class="service-code">00226</span>PGFN - todos serviços do REGULARIZE, SISPAR e atendimento</div>
-      <div class="service-item"><span class="service-code">00051</span>Processos Digitais e Requerimentos Web</div>
-      <div class="service-item"><span class="service-code">00002</span>Situação Fiscal do Contribuinte</div>
-    </div>`
+    body: "Busque cada código abaixo, marque o item e confirme. Repita para todos os 13:",
+    services: [
+      { code: "00143", name: "Acessar PER/DCOMP WEB" },
+      { code: "00006", name: "Caixa Postal - Mensagens" },
+      { code: "00050", name: "Caixa Postal - Termo de Opção pelo Domicílio Tributário Eletrônico" },
+      { code: "00197", name: "CHAT RFB e Receita Atende - Todos os serviços" },
+      { code: "00083", name: "Comunicação para Compensação de Ofício" },
+      { code: "00021", name: "Fontes Pagadoras" },
+      { code: "00085", name: "PER/DCOMP - Consulta Análise Preliminar" },
+      { code: "00025", name: "PER/DCOMP - Consulta Despacho Decisório" },
+      { code: "00086", name: "PER/DCOMP - Consulta Intimação" },
+      { code: "00087", name: "PER/DCOMP - Consulta Processamento" },
+      { code: "00226", name: "PGFN - todos serviços do REGULARIZE, SISPAR e atendimento" },
+      { code: "00051", name: "Processos Digitais e Requerimentos Web" },
+      { code: "00002", name: "Situação Fiscal do Contribuinte" }
+    ]
   },
   {
-    tag: "Procuração",
+    tag: "Criando a procuração",
     title: "Confirme e avance",
-    body: `Após marcar todos os 13 serviços, clique em Confirmar e depois em Avançar. Na próxima página você irá assinar.`,
-    extra: `<div class="obs-box">Se aparecer a pergunta <strong>"Gostaria de restringir os poderes quanto a processos digitais?"</strong> — clique em <strong>NÃO</strong>.</div>`
+    body: "Após marcar todos os 13 serviços, clique em Confirmar e depois em Avançar.",
+    extras: [
+      { type: "obs", val: "Se aparecer \"Gostaria de restringir os poderes quanto a processos digitais?\" — clique em NÃO." }
+    ]
   },
   {
     tag: "Assinatura",
     title: "Autorize e insira o código",
-    body: `O portal vai solicitar sua autorização. Clique em "Autorizar". Um código será enviado por notificação push para o app gov.br no seu celular.`,
-    extra: `<div class="highlight-box"><strong>Como encontrar o código</strong>Deslize a tela do celular de cima para baixo — o código aparece na barra de notificações. Não precisa abrir o app.</div><div class="obs-box">O código tem 6 dígitos. Digite-o no campo da tela e clique em Autorizar.</div>`
+    body: "O portal vai pedir autorização. Clique em \"Autorizar\". Um código de 6 dígitos chegará por notificação push no app gov.br.",
+    extras: [
+      { type: "info", label: "Como achar o código", val: "Deslize a tela do celular de cima para baixo. O código aparece na barra de notificações — não precisa abrir o app." },
+      { type: "obs", val: "Digite o código no campo da tela e clique em Autorizar." }
+    ]
   },
   {
-    tag: "Concluído!",
-    title: "Procuração registrada com sucesso",
-    body: `Você vai ver a mensagem "Autorização registrada com sucesso!" — a procuração está concluída.`,
-    extra: `<div style="text-align:center; margin-top: 1.5rem;">
-      <div class="success-icon">✓</div>
-      <p style="font-size: 14px; color: var(--color-text-secondary); line-height: 1.6;">Obrigado por concluir a autorização!<br>Nossa equipe já pode acompanhar sua situação fiscal.</p>
-      <div style="margin-top: 1.5rem; padding: 1rem; background: #f0faf4; border-radius: 10px;">
-        <p style="font-size: 13px; color: #1a4a2a; font-weight: 500;">Precisa de ajuda?</p>
-        <p style="font-size: 12px; color: #4a7a5a; margin-top: 4px;">Entre em contato com nossa equipe pelo WhatsApp</p>
-      </div>
-    </div>`,
-    last: true
+    tag: "Concluído",
+    title: "Tudo pronto!",
+    body: "",
+    success: true
   }
 ];
 
-let current = 0;
+let cur = 0;
 
 function render() {
-  const s = steps[current];
-  const pct = Math.round(((current + 1) / steps.length) * 100);
-  document.getElementById('progress').style.width = pct + '%';
-  document.getElementById('step-counter').textContent = `Passo ${current + 1} de ${steps.length}`;
+  const s = steps[cur];
+  const pct = Math.round(((cur + 1) / steps.length) * 100);
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('step-num').textContent = `Passo ${cur + 1} de ${steps.length}`;
 
-  let html = `
-    <div class="step-tag"><div class="step-dot"></div>${s.tag}</div>
-    <h2 class="step-title">${s.title}</h2>
-    <p class="step-body">${s.body}</p>
-    ${s.extra || ''}
-  `;
+  let html = `<div class="tag"><div class="tag-dot"></div>${s.tag}</div>
+    <div class="step-title">${s.title}</div>`;
+
+  if (s.success) {
+    html += `<div class="success-wrap">
+      <div class="success-circle">✓</div>
+      <div class="success-title">Autorização registrada!</div>
+      <div class="success-body">A mensagem "Autorização registrada com sucesso!" apareceu na tela.<br>Você pode fechar esta página.</div>
+      <div class="success-card">
+        <strong>Precisa de ajuda?</strong>
+        <p>Entre em contato com nossa equipe pelo WhatsApp — ficamos felizes em ajudar.</p>
+      </div>
+    </div>`;
+  } else {
+    html += `<div class="step-body">${s.body}</div>`;
+    if (s.extras) {
+      s.extras.forEach((e, i) => {
+        if (e.type === 'info') {
+          html += `<div class="info-box">
+            <div class="info-box-label">${e.label}</div>
+            <div class="info-box-val">${e.val}</div>
+            ${e.copy ? `<button class="copy-btn" id="cbtn" onclick="doCopy()">Copiar CNPJ</button>` : ''}
+          </div>`;
+        } else {
+          html += `<div class="obs">${e.val}</div>`;
+        }
+      });
+    }
+    if (s.services) {
+      html += `<div class="services">`;
+      s.services.forEach(sv => {
+        html += `<div class="svc"><span class="svc-code">${sv.code}</span><span>${sv.name}</span></div>`;
+      });
+      html += `</div>`;
+    }
+  }
+
   document.getElementById('content').innerHTML = html;
 
   const nav = document.getElementById('nav');
-  const btnNext = document.getElementById('btn-next');
-  const btnBack = document.getElementById('btn-back');
+  if (s.success) { nav.innerHTML = ''; return; }
 
-  if (s.last) {
-    nav.innerHTML = '';
-    return;
-  }
+  let backBtn = cur > 0
+    ? `<button class="btn-back" onclick="go(-1)">Voltar</button>`
+    : `<button class="btn-back" style="visibility:hidden">Voltar</button>`;
 
-  nav.innerHTML = `
-    <button class="btn-back" onclick="prevStep()" ${current === 0 ? 'style="visibility:hidden"' : ''}>Voltar</button>
-    ${s.link
-      ? `<a class="btn-link" href="${s.link.url}" target="_blank" onclick="setTimeout(nextStep, 800)">${s.link.label} →</a>`
-      : `<button class="btn-next" onclick="nextStep()">Continuar</button>`
-    }
-  `;
+  let fwdBtn = s.link
+    ? `<a class="btn-link" href="${s.link.url}" target="_blank" onclick="setTimeout(()=>go(1),600)">${s.link.label} →</a>`
+    : `<button class="btn-next" onclick="go(1)">Continuar</button>`;
+
+  nav.innerHTML = backBtn + fwdBtn;
 }
 
-function nextStep() {
-  if (current < steps.length - 1) { current++; render(); }
-}
-function prevStep() {
-  if (current > 0) { current--; render(); }
+function go(dir) {
+  cur = Math.min(Math.max(cur + dir, 0), steps.length - 1);
+  render();
+  document.querySelector('.wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function copyCNPJ() {
-  navigator.clipboard.writeText('27.677.082/0001-60').then(() => {
-    const btn = document.getElementById('cnpj-btn');
-    if (btn) { btn.textContent = 'Copiado!'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = 'Copiar CNPJ'; btn.classList.remove('copied'); }, 2000); }
-  });
+function doCopy() {
+  navigator.clipboard.writeText('27.677.082/0001-60').catch(() => {});
+  const b = document.getElementById('cbtn');
+  if (!b) return;
+  b.textContent = 'Copiado!';
+  b.classList.add('copied');
+  setTimeout(() => { b.textContent = 'Copiar CNPJ'; b.classList.remove('copied'); }, 2000);
 }
 
 render();
