@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentação – UniCarioca</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mulish:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red:       #CC1616;
+    --red-dark:  #8B0E0E;
+    --red-light: #E84040;
+    --black:     #0D0D0D;
+    --surface:   #161616;
+    --card:      #1E1E1E;
+    --border:    #2E2E2E;
+    --text:      #F0EDE8;
+    --muted:     #666;
+    --done-bg:   #181818;
+    --done-text: #444;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Mulish', sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    padding-bottom: 3rem;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--surface);
+    border-bottom: 2px solid var(--red-dark);
+    padding: 1.2rem 1.2rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  header img {
+    height: 52px;
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  .header-text h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .header-text p {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-weight: 300;
+    margin-top: 2px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 1.4rem 1rem 0;
+  }
+
+  /* ── NOTICE BANNER ── */
+  .notice {
+    background: linear-gradient(135deg, #200a0a 0%, #1a0505 100%);
+    border: 1px solid var(--red-dark);
+    border-left: 4px solid var(--red);
+    border-radius: 6px;
+    padding: 0.9rem 1rem;
+    margin-bottom: 1.4rem;
+    font-size: 0.82rem;
+    color: #cca0a0;
+    line-height: 1.5;
+  }
+
+  .notice strong { color: var(--red-light); }
+
+  /* ── PROGRESS ── */
+  .progress-wrap {
+    margin-bottom: 1.4rem;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .progress-label span:last-child { color: var(--red-light); }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--red-dark), var(--red-light));
+    border-radius: 99px;
+    transition: width 0.4s cubic-bezier(.4,0,.2,1);
+    width: 0%;
+  }
+
+  /* ── ADD NEW ITEM ── */
+  .add-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .add-row input {
+    flex: 1;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.75rem 0.9rem;
+    color: var(--text);
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .add-row input:focus { border-color: var(--red); }
+  .add-row input::placeholder { color: var(--muted); }
+
+  .btn-add {
+    background: var(--red);
+    border: none;
+    border-radius: 6px;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .btn-add:hover { background: var(--red-light); }
+  .btn-add:active { transform: scale(0.93); }
+
+  /* ── SECTION LABELS ── */
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    padding: 0.4rem 0 0.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-label .count {
+    background: var(--border);
+    color: var(--muted);
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 99px;
+    letter-spacing: 0;
+  }
+
+  /* ── ITEM ── */
+  .item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.8rem 0.9rem;
+    margin-bottom: 0.5rem;
+    transition: border-color 0.2s, background 0.2s, opacity 0.3s;
+    animation: slideIn 0.22s ease;
+    position: relative;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .item:hover { border-color: #3a3a3a; }
+
+  /* checkbox */
+  .item-check {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.18s;
+    background: transparent;
+  }
+
+  .item-check:hover { border-color: var(--red-light); }
+
+  .item-check svg { display: none; }
+
+  /* text */
+  .item-text {
+    flex: 1;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: var(--text);
+    cursor: pointer;
+    word-break: break-word;
+  }
+
+  /* edit input */
+  .item-edit-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--red);
+    color: var(--text);
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    outline: none;
+    padding: 0 0 2px;
+    width: 100%;
+  }
+
+  /* actions */
+  .item-actions {
+    display: flex;
+    gap: 0.3rem;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .item:hover .item-actions { opacity: 1; }
+
+  .item-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--muted);
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    transition: all 0.15s;
+  }
+
+  .item-btn:hover { color: var(--text); border-color: #555; }
+  .item-btn.edit-btn:hover { color: var(--red-light); border-color: var(--red-dark); }
+  .item-btn.delete-btn:hover { color: #ff5555; border-color: #551111; }
+  .item-btn.save-btn { color: #4caf50; border-color: #2a5a2a; }
+
+  /* ── DONE STATE ── */
+  .item.done {
+    background: var(--done-bg);
+    border-color: #222;
+    opacity: 0.6;
+  }
+
+  .item.done .item-check {
+    background: var(--red-dark);
+    border-color: var(--red-dark);
+  }
+
+  .item.done .item-check svg { display: block; }
+
+  .item.done .item-text {
+    text-decoration: line-through;
+    color: var(--done-text);
+  }
+
+  /* ── NOTES ── */
+  .notes-section {
+    margin-top: 1.6rem;
+    background: #0f0f0f;
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--red-dark);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+
+  .notes-section h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .notes-section p {
+    font-size: 0.78rem;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .notes-section p + p { margin-top: 0.3rem; }
+
+  .notes-section strong { color: #777; }
+
+  /* ── EMPTY STATE ── */
+  .empty {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    display: none;
+  }
+
+  /* ── DESKTOP ── */
+  @media (min-width: 640px) {
+    header { padding: 1.4rem 2rem; }
+    header img { height: 60px; }
+    .header-text h1 { font-size: 2rem; }
+    .header-text p { font-size: 0.8rem; }
+    main { padding: 2rem 1.5rem 0; }
+    .item { padding: 0.9rem 1rem; }
+    .item-actions { opacity: 0; }
+    .item-text { font-size: 0.92rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="https://unicarioca.edu.br/wp-content/uploads/2023/05/logo_unicariocadigital_vertical_2021-1-1.png" alt="UniCarioca" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><text y=%2240%22 font-size=%2236%22>🎓</text></svg>'">
+  <div class="header-text">
+    <h1>Documentação</h1>
+    <p>Checklist de matrícula – UniCarioca</p>
+  </div>
+</header>
+
+<main>
+
+  <div class="notice">
+    <strong>⏰ Atenção:</strong> Envie sua documentação em até <strong>15 dias</strong>. Confira cada item abaixo e marque conforme for providenciando.
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Progresso</span>
+      <span id="progress-text">0 / 0</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+
+  <div class="add-row">
+    <input type="text" id="new-item-input" placeholder="Adicionar novo documento…" maxlength="200">
+    <button class="btn-add" id="btn-add" aria-label="Adicionar">+</button>
+  </div>
+
+  <div class="section-label">
+    Pendentes <span class="count" id="pending-count">0</span>
+  </div>
+
+  <div id="list-pending"></div>
+  <div class="empty" id="empty-pending">Nenhum item pendente 🎉</div>
+
+  <div class="section-label" style="margin-top:1.2rem;">
+    Concluídos <span class="count" id="done-count">0</span>
+  </div>
+
+  <div id="list-done"></div>
+  <div class="empty" id="empty-done">Nenhum item concluído ainda.</div>
+
+  <div class="notes-section">
+    <h3>Observações</h3>
+    <p><strong>* Transferência Externa:</strong> Histórico e Programa de Disciplinas.</p>
+    <p><strong>* Segunda Graduação:</strong> Histórico, Programa de Disciplinas e Diploma.</p>
+  </div>
+
+</main>
+
+<script>
+const DEFAULT_ITEMS = [
+  "Documento de Identidade",
+  "CPF",
+  "Certidão de Nascimento ou Casamento",
+  "Título de Eleitor",
+  "Certificado de Reservista (se do sexo masculino)",
+  "Histórico Escolar do Ensino Médio",
+  "Diploma ou Certificado de conclusão do Ensino Médio (ou Declaração provisória se concluiu há menos de 6 meses)",
+  "Boletim individual do resultado do ENEM (somente para quem ingressou via ENEM)",
+  "Comprovante de Residência",
+  "1 Foto 3x4",
+];
+
+const STORAGE_KEY = 'unicarioca_checklist_v2';
+
+let items = loadItems();
+
+function loadItems() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return DEFAULT_ITEMS.map((text, i) => ({ id: i + 1, text, done: false }));
+}
+
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e) {}
+}
+
+function nextId() {
+  return items.length ? Math.max(...items.map(i => i.id)) + 1 : 1;
+}
+
+function render() {
+  const pending = items.filter(i => !i.done);
+  const done    = items.filter(i =>  i.done);
+
+  document.getElementById('pending-count').textContent = pending.length;
+  document.getElementById('done-count').textContent    = done.length;
+
+  const total = items.length;
+  const doneCount = done.length;
+  const pct = total ? Math.round(doneCount / total * 100) : 0;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = doneCount + ' / ' + total;
+
+  renderList('list-pending', 'empty-pending', pending);
+  renderList('list-done',    'empty-done',    done);
+}
+
+function renderList(containerId, emptyId, subset) {
+  const container = document.getElementById(containerId);
+  const emptyEl   = document.getElementById(emptyId);
+  container.innerHTML = '';
+
+  if (!subset.length) {
+    emptyEl.style.display = 'block';
+    return;
+  }
+  emptyEl.style.display = 'none';
+
+  subset.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'item' + (item.done ? ' done' : '');
+    div.dataset.id = item.id;
+
+    // checkbox
+    const chk = document.createElement('div');
+    chk.className = 'item-check';
+    chk.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    chk.addEventListener('click', () => toggleDone(item.id));
+
+    // text
+    const txt = document.createElement('div');
+    txt.className = 'item-text';
+    txt.textContent = item.text;
+    txt.addEventListener('dblclick', () => startEdit(item.id));
+
+    // actions
+    const acts = document.createElement('div');
+    acts.className = 'item-actions';
+
+    const editBtn = document.createElement('button');
+    editBtn.className = 'item-btn edit-btn';
+    editBtn.title = 'Editar';
+    editBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
+    editBtn.addEventListener('click', () => startEdit(item.id));
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'item-btn delete-btn';
+    delBtn.title = 'Excluir';
+    delBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>`;
+    delBtn.addEventListener('click', () => deleteItem(item.id));
+
+    acts.appendChild(editBtn);
+    acts.appendChild(delBtn);
+
+    div.appendChild(chk);
+    div.appendChild(txt);
+    div.appendChild(acts);
+    container.appendChild(div);
+  });
+}
+
+function toggleDone(id) {
+  const item = items.find(i => i.id === id);
+  if (item) { item.done = !item.done; save(); render(); }
+}
+
+function deleteItem(id) {
+  items = items.filter(i => i.id !== id);
+  save(); render();
+}
+
+function startEdit(id) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+
+  const div = document.querySelector(`.item[data-id="${id}"]`);
+  if (!div) return;
+
+  const txtEl = div.querySelector('.item-text');
+  const acts  = div.querySelector('.item-actions');
+
+  // swap text for input
+  const inp = document.createElement('input');
+  inp.className = 'item-edit-input';
+  inp.value = item.text;
+  txtEl.replaceWith(inp);
+  inp.focus();
+  inp.select();
+
+  // swap edit btn for save btn
+  const editBtn = acts.querySelector('.edit-btn');
+  const saveBtn = document.createElement('button');
+  saveBtn.className = 'item-btn save-btn';
+  saveBtn.title = 'Salvar';
+  saveBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`;
+  editBtn.replaceWith(saveBtn);
+  acts.style.opacity = '1';
+
+  const commit = () => {
+    const val = inp.value.trim();
+    if (val) { item.text = val; save(); }
+    render();
+  };
+
+  saveBtn.addEventListener('click', commit);
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') commit();
+    if (e.key === 'Escape') render();
+  });
+}
+
+// Add item
+document.getElementById('btn-add').addEventListener('click', addItem);
+document.getElementById('new-item-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addItem();
+});
+
+function addItem() {
+  const inp = document.getElementById('new-item-input');
+  const val = inp.value.trim();
+  if (!val) return;
+  items.unshift({ id: nextId(), text: val, done: false });
+  inp.value = '';
+  save(); render();
+}
+
+render();
+</script>
+</body>
+</html>
