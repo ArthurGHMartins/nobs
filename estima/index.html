@@ -534,8 +534,8 @@
     // Badge %: usa G6 (metaAlcancada) como decimal, ex: 0.38 → "38%"
     const alcancada = parseFloat(data.metaAlcancada);
     document.getElementById("pctNum").textContent = !isNaN(alcancada)
-      ? (alcancada * 100).toFixed(0) + "%"
-      : pct.toFixed(0) + "%";
+      ? (alcancada * 100).toFixed(2) + "%"
+      : pct.toFixed(2) + "%";
   }
 
   async function loadData() {
