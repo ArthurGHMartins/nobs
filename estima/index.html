@@ -52,6 +52,23 @@
       font: inherit;
     }
 
+    .material-symbols-rounded {
+      display: inline-block;
+      direction: ltr;
+      font-family: "Material Symbols Rounded";
+      font-size: 24px;
+      font-style: normal;
+      font-weight: normal;
+      font-feature-settings: "liga";
+      letter-spacing: normal;
+      line-height: 1;
+      text-transform: none;
+      white-space: nowrap;
+      word-wrap: normal;
+      -webkit-font-feature-settings: "liga";
+      -webkit-font-smoothing: antialiased;
+    }
+
     .topbar {
       position: sticky;
       top: 0;
@@ -652,7 +669,7 @@
   </main>
 
   <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGNYmiTsOe0qFRLuaXkZYxWiwj8f0-hxvR3N3F0SCfgntI1UEORIYBNJpvv15n-QVl3A/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby8I-pg58X5fQLDPNaIUOqm_iuJ0kW433Gx_RoIiIalvDkArz-39VsidXBVlbFcry2jTw/exec";
 
     const fieldMap = [
       { id: "val-clientes", key: "totalClientes" },
@@ -666,6 +683,7 @@
     });
 
     function toNumber(value) {
+      if (value === null || value === undefined || value === "") return NaN;
       if (typeof value === "number") return value;
       if (typeof value !== "string") return Number(value);
 
@@ -676,6 +694,17 @@
         .replace(",", ".");
 
       return Number(normalized);
+    }
+
+    function validateData(data) {
+      if (!data || typeof data !== "object") {
+        throw new Error("a integração retornou uma resposta sem dados");
+      }
+
+      const invalidFields = fieldMap.filter(({ key }) => !Number.isFinite(toNumber(data[key])));
+      if (invalidFields.length > 0) {
+        throw new Error("o endpoint publicado ainda está usando a versão antiga; confirme a implantação que lê H2:H5");
+      }
     }
 
     function formatValue(value) {
@@ -737,6 +766,8 @@
         if (payload.status !== "ok") {
           throw new Error(payload.message || "resposta inválida da planilha");
         }
+
+        validateData(payload.data);
 
         fieldMap.forEach(({ id, key }) => {
           document.getElementById(id).textContent = formatValue(payload.data[key]);
