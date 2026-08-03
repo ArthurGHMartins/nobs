@@ -259,7 +259,8 @@
     }
 
     .metric-card,
-    .goal-card {
+    .goal-card,
+    .goals-card {
       border: 1px solid var(--border);
       border-radius: var(--radius-card);
       background: var(--surface);
@@ -267,7 +268,8 @@
     }
 
     .metric-card:hover,
-    .goal-card:hover {
+    .goal-card:hover,
+    .goals-card:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 30px rgba(0, 0, 0, .08);
     }
@@ -406,30 +408,241 @@
       color: var(--error);
     }
 
-    .progress__meta {
-      margin-bottom: 10px;
+    .race {
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .race__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .race__status {
+      margin: 0;
+      padding: 6px 10px;
+      border-radius: 9999px;
+      background: #ECFDF5;
+      color: #047857;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .race__status.is-behind {
+      background: var(--error-soft);
+      color: #B91C1C;
+    }
+
+    .race__status.is-even {
+      background: #F3F4F6;
+      color: var(--text-secondary);
+    }
+
+    .race__legend {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+    }
+
+    .race__legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-secondary);
+    }
+
+    .race__legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: var(--success);
+    }
+
+    .race__legend-dot--pace {
+      background: var(--error);
+    }
+
+    .race__course {
+      display: grid;
+      gap: 24px;
+    }
+
+    .race-lane__header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      color: var(--text-secondary);
+      margin-bottom: 10px;
       font-size: 12px;
     }
 
-    .progress__track {
+    .race-lane__name {
+      color: var(--text-secondary);
+    }
+
+    .race-lane__value {
+      color: var(--text-primary);
+      font-family: "General Sans", sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .race-lane__track {
+      --position: 0%;
       width: 100%;
-      height: 10px;
-      overflow: hidden;
+      height: 12px;
+      position: relative;
       border-radius: 9999px;
       background: #EEEEF2;
     }
 
-    .progress__fill {
+    .race-lane__track::after {
+      content: "";
+      position: absolute;
+      top: -5px;
+      right: 2px;
+      height: 22px;
+      border-right: 2px dashed var(--neutral);
+      opacity: .65;
+    }
+
+    .race-lane__fill {
       width: 0;
       height: 100%;
       border-radius: inherit;
       background: var(--success);
       transition: width 900ms var(--ease);
+    }
+
+    .race-lane--pace .race-lane__fill {
+      background: var(--error);
+    }
+
+    .race-lane__runner {
+      width: 22px;
+      height: 22px;
+      position: absolute;
+      top: 50%;
+      left: clamp(11px, var(--position), calc(100% - 11px));
+      z-index: 1;
+      border: 4px solid var(--surface);
+      border-radius: 9999px;
+      background: var(--success);
+      box-shadow: 0 0 0 1px rgba(10, 10, 10, .12);
+      transform: translate(-50%, -50%);
+      transition: left 900ms var(--ease);
+    }
+
+    .race-lane--pace .race-lane__runner {
+      background: var(--error);
+    }
+
+    .goals-card {
+      margin-top: 24px;
+      padding: 32px;
+    }
+
+    .goals-card__header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 24px;
+    }
+
+    .goals-card__header h2 {
+      margin: 0;
+      font-family: "General Sans", sans-serif;
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: 700;
+      letter-spacing: -.035em;
+    }
+
+    .goals-card__description {
+      margin: 8px 0 0;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .goals-card__count {
+      flex: 0 0 auto;
+      padding: 6px 10px;
+      border-radius: 9999px;
+      background: #F3F4F6;
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .goals-list {
+      border-top: 1px solid var(--border);
+    }
+
+    .goal-item {
+      min-height: 58px;
+      padding: 12px 4px;
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .goal-item:last-child {
+      border-bottom: 0;
+    }
+
+    .goal-item__check {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #D1D5DB;
+      border-radius: 9999px;
+      display: grid;
+      place-items: center;
+      color: var(--surface);
+    }
+
+    .goal-item.is-complete .goal-item__check {
+      border-color: var(--success);
+      background: var(--success);
+    }
+
+    .goal-item.is-complete .goal-item__check::after {
+      content: "✓";
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .goal-item__name {
+      overflow-wrap: anywhere;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .goal-item.is-complete .goal-item__name {
+      color: var(--text-secondary);
+      text-decoration: line-through;
+      text-decoration-color: var(--neutral);
+    }
+
+    .goal-item__status {
+      color: var(--neutral);
+      font-size: 12px;
+    }
+
+    .goal-item.is-complete .goal-item__status {
+      color: #047857;
+    }
+
+    .goals-list__message {
+      margin: 0;
+      padding: 28px 4px 4px;
+      color: var(--neutral);
+      font-size: 13px;
     }
 
     .skeleton {
@@ -506,6 +719,11 @@
         padding: 24px;
       }
 
+      .goals-card {
+        margin-top: 16px;
+        padding: 24px;
+      }
+
       .goal-card__header {
         gap: 24px;
       }
@@ -535,10 +753,25 @@
         border-left: 0;
       }
 
-      .progress__meta {
+      .race__top,
+      .goals-card__header {
         align-items: flex-start;
         flex-direction: column;
-        gap: 4px;
+        gap: 12px;
+      }
+
+      .race__legend {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .goal-item {
+        grid-template-columns: 28px minmax(0, 1fr);
+      }
+
+      .goal-item__status {
+        grid-column: 2;
       }
     }
 
@@ -622,11 +855,11 @@
         <div>
           <p class="section-label">Progresso da meta</p>
           <h2 id="goalTitle">Objetivo atual</h2>
-          <p class="goal-card__description">O progresso é calculado comparando o Total Estima com a meta definida para o período.</p>
+          <p class="goal-card__description">Compare o progresso real com o ponto ideal para hoje e acompanhe essa corrida até a meta.</p>
         </div>
         <div class="percentage">
           <span class="percentage__value" id="pctNum">—</span>
-          <span class="percentage__label">da meta alcançada</span>
+          <span class="percentage__label">de progresso atual</span>
         </div>
       </div>
 
@@ -641,22 +874,74 @@
         </div>
       </div>
 
-      <div class="progress">
-        <div class="progress__meta">
-          <span><strong id="progAtual">—</strong> realizados</span>
-          <span>Meta: <strong id="progMeta">—</strong></span>
+      <div class="race" aria-labelledby="raceStatus">
+        <div class="race__top">
+          <p class="race__status is-even" id="raceStatus">Calculando o ritmo…</p>
+          <div class="race__legend" aria-label="Legenda da corrida">
+            <span class="race__legend-item">
+              <span class="race__legend-dot" aria-hidden="true"></span>
+              Progresso atual
+            </span>
+            <span class="race__legend-item">
+              <span class="race__legend-dot race__legend-dot--pace" aria-hidden="true"></span>
+              Ponto ideal hoje
+            </span>
+          </div>
         </div>
-        <div
-          class="progress__track"
-          id="progressTrack"
-          role="progressbar"
-          aria-label="Progresso da meta"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow="0"
-        >
-          <div class="progress__fill" id="progressFill"></div>
+
+        <div class="race__course">
+          <div class="race-lane">
+            <div class="race-lane__header">
+              <span class="race-lane__name">Progresso atual</span>
+              <strong class="race-lane__value" id="actualPct">—</strong>
+            </div>
+            <div
+              class="race-lane__track"
+              id="actualTrack"
+              role="progressbar"
+              aria-label="Progresso atual"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+            >
+              <div class="race-lane__fill" id="actualFill"></div>
+              <span class="race-lane__runner" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <div class="race-lane race-lane--pace">
+            <div class="race-lane__header">
+              <span class="race-lane__name">Ponto ideal hoje</span>
+              <strong class="race-lane__value" id="pacePct">—</strong>
+            </div>
+            <div
+              class="race-lane__track"
+              id="paceTrack"
+              role="progressbar"
+              aria-label="Ponto ideal do mês"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+            >
+              <div class="race-lane__fill" id="paceFill"></div>
+              <span class="race-lane__runner" aria-hidden="true"></span>
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <section class="goals-card" aria-labelledby="goalsTitle">
+      <div class="goals-card__header">
+        <div>
+          <p class="section-label">Próximas conquistas</p>
+          <h2 id="goalsTitle">Lista de metas</h2>
+          <p class="goals-card__description">Itens planejados e conquistas já alcançadas.</p>
+        </div>
+        <span class="goals-card__count" id="goalsCount">Carregando…</span>
+      </div>
+      <div class="goals-list" id="goalsList" aria-live="polite" aria-busy="true">
+        <p class="goals-list__message">Carregando a lista de metas…</p>
       </div>
     </section>
 
@@ -702,8 +987,10 @@
       }
 
       const invalidFields = fieldMap.filter(({ key }) => !Number.isFinite(toNumber(data[key])));
-      if (invalidFields.length > 0) {
-        throw new Error("o endpoint publicado ainda está usando a versão antiga; confirme a implantação que lê H2:H5");
+      const hasInvalidRace = !Number.isFinite(toPercentage(data.percentualMes))
+        || !Number.isFinite(toPercentage(data.progressoAtual));
+      if (invalidFields.length > 0 || hasInvalidRace || !Array.isArray(data.listaMetas)) {
+        throw new Error("o endpoint publicado ainda não contém H15:H16 e a Lista de Metas; implante a nova versão do Apps Script");
       }
     }
 
@@ -712,10 +999,22 @@
       return Number.isFinite(number) ? numberFormatter.format(number) : (value ?? "—");
     }
 
+    function toPercentage(value) {
+      const hasPercentSign = typeof value === "string" && value.includes("%");
+      const numericValue = toNumber(hasPercentSign ? value.replace("%", "") : value);
+      if (!Number.isFinite(numericValue)) return NaN;
+      return !hasPercentSign && Math.abs(numericValue) <= 1 ? numericValue * 100 : numericValue;
+    }
+
+    function formatPercentage(value) {
+      return `${numberFormatter.format(value)}%`;
+    }
+
     function setLoading(isLoading) {
       fieldMap.forEach(({ id }) => {
         document.getElementById(id).classList.toggle("skeleton", isLoading);
       });
+      document.getElementById("goalsList").setAttribute("aria-busy", String(isLoading));
 
       const button = document.getElementById("btnRefresh");
       button.disabled = isLoading;
@@ -738,20 +1037,83 @@
       document.getElementById("errorBanner").classList.remove("is-visible");
     }
 
-    function updateProgress(data) {
-      const current = toNumber(data.totalEstimativa);
-      const goal = toNumber(data.metaAtual);
-      const rawPercentage = Number.isFinite(current) && Number.isFinite(goal) && goal > 0
-        ? (current / goal) * 100
-        : 0;
-      const visiblePercentage = Math.max(0, Math.min(rawPercentage, 100));
-      const percentageLabel = `${numberFormatter.format(Math.max(0, rawPercentage))}%`;
+    function updateRace(data) {
+      const actual = Math.max(0, toPercentage(data.progressoAtual));
+      const pace = Math.max(0, toPercentage(data.percentualMes));
+      const difference = actual - pace;
 
-      document.getElementById("progressFill").style.width = `${visiblePercentage}%`;
-      document.getElementById("progressTrack").setAttribute("aria-valuenow", visiblePercentage.toFixed(1));
-      document.getElementById("pctNum").textContent = percentageLabel;
-      document.getElementById("progAtual").textContent = formatValue(data.totalEstimativa);
-      document.getElementById("progMeta").textContent = formatValue(data.metaAtual);
+      updateRaceLane("actual", actual);
+      updateRaceLane("pace", pace);
+      document.getElementById("pctNum").textContent = formatPercentage(actual);
+
+      const status = document.getElementById("raceStatus");
+      status.classList.remove("is-behind", "is-even");
+
+      if (Math.abs(difference) < 0.05) {
+        status.textContent = "No ritmo planejado";
+        status.classList.add("is-even");
+      } else if (difference > 0) {
+        status.textContent = `${numberFormatter.format(difference)} p.p. à frente do ritmo`;
+      } else {
+        status.textContent = `${numberFormatter.format(Math.abs(difference))} p.p. atrás do ritmo`;
+        status.classList.add("is-behind");
+      }
+    }
+
+    function updateRaceLane(prefix, percentage) {
+      const visiblePercentage = Math.min(percentage, 100);
+      const track = document.getElementById(`${prefix}Track`);
+
+      document.getElementById(`${prefix}Pct`).textContent = formatPercentage(percentage);
+      document.getElementById(`${prefix}Fill`).style.width = `${visiblePercentage}%`;
+      track.style.setProperty("--position", `${visiblePercentage}%`);
+      track.setAttribute("aria-valuenow", visiblePercentage.toFixed(1));
+    }
+
+    function renderGoals(items) {
+      const list = document.getElementById("goalsList");
+      const completed = items.filter(({ alcancada }) => alcancada).length;
+      list.replaceChildren();
+      list.setAttribute("aria-busy", "false");
+      document.getElementById("goalsCount").textContent = `${completed} de ${items.length} concluídas`;
+
+      if (items.length === 0) {
+        const emptyMessage = document.createElement("p");
+        emptyMessage.className = "goals-list__message";
+        emptyMessage.textContent = "Nenhuma meta cadastrada em P3:P.";
+        list.appendChild(emptyMessage);
+        return;
+      }
+
+      items.forEach(({ nome, alcancada }) => {
+        const item = document.createElement("div");
+        item.className = `goal-item${alcancada ? " is-complete" : ""}`;
+
+        const check = document.createElement("span");
+        check.className = "goal-item__check";
+        check.setAttribute("aria-hidden", "true");
+
+        const name = document.createElement("span");
+        name.className = "goal-item__name";
+        name.textContent = nome;
+
+        const itemStatus = document.createElement("span");
+        itemStatus.className = "goal-item__status";
+        itemStatus.textContent = alcancada ? "Concluída" : "Pendente";
+
+        item.append(check, name, itemStatus);
+        list.appendChild(item);
+      });
+    }
+
+    function showGoalsError() {
+      const list = document.getElementById("goalsList");
+      const message = document.createElement("p");
+      message.className = "goals-list__message";
+      message.textContent = "Não foi possível carregar a lista de metas.";
+      list.replaceChildren(message);
+      list.setAttribute("aria-busy", "false");
+      document.getElementById("goalsCount").textContent = "Indisponível";
     }
 
     async function loadData() {
@@ -773,7 +1135,8 @@
           document.getElementById(id).textContent = formatValue(payload.data[key]);
         });
 
-        updateProgress(payload.data);
+        updateRace(payload.data);
+        renderGoals(payload.data.listaMetas);
         document.getElementById("connectionStatus").classList.remove("is-syncing", "has-error");
         document.getElementById("connectionText").textContent = "Conectado à planilha";
         document.getElementById("lastUpdate").textContent =
@@ -787,8 +1150,12 @@
           document.getElementById(id).textContent = "—";
         });
         document.getElementById("pctNum").textContent = "—";
-        document.getElementById("progAtual").textContent = "—";
-        document.getElementById("progMeta").textContent = "—";
+        updateRaceLane("actual", 0);
+        updateRaceLane("pace", 0);
+        document.getElementById("actualPct").textContent = "—";
+        document.getElementById("pacePct").textContent = "—";
+        document.getElementById("raceStatus").textContent = "Ritmo indisponível";
+        showGoalsError();
         document.getElementById("lastUpdate").textContent = "Falha na última atualização";
       } finally {
         setLoading(false);
