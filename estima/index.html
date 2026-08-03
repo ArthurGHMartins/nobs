@@ -413,46 +413,27 @@
       border-top: 1px solid var(--border);
     }
 
-    .race__top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 28px;
-    }
-
-    .race__status {
-      margin: 0;
-      padding: 6px 10px;
-      border-radius: 9999px;
-      background: #ECFDF5;
-      color: #047857;
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .race__status.is-behind {
-      background: var(--error-soft);
-      color: #B91C1C;
-    }
-
-    .race__status.is-even {
-      background: #F3F4F6;
-      color: var(--text-secondary);
-    }
-
     .race__legend {
-      display: flex;
-      align-items: center;
-      gap: 16px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      margin-bottom: 20px;
       font-size: 12px;
     }
 
     .race__legend-item {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       color: var(--text-secondary);
+    }
+
+    .race__legend-value {
+      margin-left: auto;
+      color: var(--text-primary);
+      font-family: "General Sans", sans-serif;
+      font-size: 14px;
+      font-weight: 700;
     }
 
     .race__legend-dot {
@@ -466,33 +447,9 @@
       background: var(--error);
     }
 
-    .race__course {
-      display: grid;
-      gap: 24px;
-    }
-
-    .race-lane__header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 10px;
-      font-size: 12px;
-    }
-
-    .race-lane__name {
-      color: var(--text-secondary);
-    }
-
-    .race-lane__value {
-      color: var(--text-primary);
-      font-family: "General Sans", sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .race-lane__track {
-      --position: 0%;
+    .race-track {
+      --actual-position: 0%;
+      --pace-position: 0%;
       width: 100%;
       height: 12px;
       position: relative;
@@ -500,45 +457,62 @@
       background: #EEEEF2;
     }
 
-    .race-lane__track::after {
+    .race-track::after {
       content: "";
       position: absolute;
       top: -5px;
       right: 2px;
+      z-index: 5;
       height: 22px;
       border-right: 2px dashed var(--neutral);
       opacity: .65;
     }
 
-    .race-lane__fill {
+    .race-track__fill {
       width: 0;
       height: 100%;
+      position: absolute;
+      inset: 0 auto 0 0;
       border-radius: inherit;
-      background: var(--success);
       transition: width 900ms var(--ease);
     }
 
-    .race-lane--pace .race-lane__fill {
+    .race-track__fill--pace {
+      z-index: 1;
       background: var(--error);
     }
 
-    .race-lane__runner {
+    .race-track__fill--actual {
+      z-index: 2;
+      background: var(--success);
+    }
+
+    .race-track__marker {
       width: 22px;
       height: 22px;
       position: absolute;
       top: 50%;
-      left: clamp(11px, var(--position), calc(100% - 11px));
-      z-index: 1;
       border: 4px solid var(--surface);
       border-radius: 9999px;
-      background: var(--success);
       box-shadow: 0 0 0 1px rgba(10, 10, 10, .12);
       transform: translate(-50%, -50%);
-      transition: left 900ms var(--ease);
+      transition: left 900ms var(--ease), opacity 200ms ease;
     }
 
-    .race-lane--pace .race-lane__runner {
+    .race-track__marker--pace {
+      left: clamp(11px, var(--pace-position), calc(100% - 11px));
+      z-index: 3;
       background: var(--error);
+    }
+
+    .race-track__marker--actual {
+      left: clamp(11px, var(--actual-position), calc(100% - 11px));
+      z-index: 4;
+      background: var(--success);
+    }
+
+    .race-track.is-on-pace .race-track__marker--pace {
+      opacity: 0;
     }
 
     .goals-card {
@@ -753,7 +727,6 @@
         border-left: 0;
       }
 
-      .race__top,
       .goals-card__header {
         align-items: flex-start;
         flex-direction: column;
@@ -761,8 +734,7 @@
       }
 
       .race__legend {
-        align-items: flex-start;
-        flex-direction: column;
+        grid-template-columns: 1fr;
         gap: 8px;
       }
 
@@ -874,59 +846,33 @@
         </div>
       </div>
 
-      <div class="race" aria-labelledby="raceStatus">
-        <div class="race__top">
-          <p class="race__status is-even" id="raceStatus">Calculando o ritmo…</p>
-          <div class="race__legend" aria-label="Legenda da corrida">
-            <span class="race__legend-item">
-              <span class="race__legend-dot" aria-hidden="true"></span>
-              Progresso atual
-            </span>
-            <span class="race__legend-item">
-              <span class="race__legend-dot race__legend-dot--pace" aria-hidden="true"></span>
-              Ponto ideal hoje
-            </span>
-          </div>
+      <div class="race">
+        <div class="race__legend" aria-label="Legenda da barra de progresso">
+          <span class="race__legend-item">
+            <span class="race__legend-dot" aria-hidden="true"></span>
+            Progresso atual
+            <strong class="race__legend-value" id="actualPct">—</strong>
+          </span>
+          <span class="race__legend-item">
+            <span class="race__legend-dot race__legend-dot--pace" aria-hidden="true"></span>
+            Ponto ideal hoje
+            <strong class="race__legend-value" id="pacePct">—</strong>
+          </span>
         </div>
 
-        <div class="race__course">
-          <div class="race-lane">
-            <div class="race-lane__header">
-              <span class="race-lane__name">Progresso atual</span>
-              <strong class="race-lane__value" id="actualPct">—</strong>
-            </div>
-            <div
-              class="race-lane__track"
-              id="actualTrack"
-              role="progressbar"
-              aria-label="Progresso atual"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow="0"
-            >
-              <div class="race-lane__fill" id="actualFill"></div>
-              <span class="race-lane__runner" aria-hidden="true"></span>
-            </div>
-          </div>
-
-          <div class="race-lane race-lane--pace">
-            <div class="race-lane__header">
-              <span class="race-lane__name">Ponto ideal hoje</span>
-              <strong class="race-lane__value" id="pacePct">—</strong>
-            </div>
-            <div
-              class="race-lane__track"
-              id="paceTrack"
-              role="progressbar"
-              aria-label="Ponto ideal do mês"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow="0"
-            >
-              <div class="race-lane__fill" id="paceFill"></div>
-              <span class="race-lane__runner" aria-hidden="true"></span>
-            </div>
-          </div>
+        <div
+          class="race-track"
+          id="raceTrack"
+          role="progressbar"
+          aria-label="Progresso atual comparado ao ponto ideal"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <div class="race-track__fill race-track__fill--pace" id="paceFill"></div>
+          <div class="race-track__fill race-track__fill--actual" id="actualFill"></div>
+          <span class="race-track__marker race-track__marker--pace" aria-hidden="true"></span>
+          <span class="race-track__marker race-track__marker--actual" aria-hidden="true"></span>
         </div>
       </div>
     </section>
@@ -954,7 +900,7 @@
   </main>
 
   <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyis1R4FMUC_d0-jHY1bPhQ_0rkkUIkM0suEZInfN8TA0p9LOsCpcTPvZsi0b-C05nIgA/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxFUcgsA5Z3W_C71SjTJWJ4AYMHMIHYyFjlkRTz95SwLRAs5WpLNuHXx7gt1y4Ak0NzFQ/exec";
 
     const fieldMap = [
       { id: "val-clientes", key: "totalClientes" },
@@ -990,7 +936,7 @@
       const hasInvalidRace = !Number.isFinite(toPercentage(data.percentualMes))
         || !Number.isFinite(toPercentage(data.progressoAtual));
       if (invalidFields.length > 0 || hasInvalidRace || !Array.isArray(data.listaMetas)) {
-        throw new Error("o endpoint publicado ainda não contém H15:H16 e a Lista de Metas; implante a nova versão do Apps Script");
+        throw new Error("o endpoint publicado ainda não contém H6, H15 e a Lista de Metas; implante a nova versão do Apps Script");
       }
     }
 
@@ -1040,34 +986,19 @@
     function updateRace(data) {
       const actual = Math.max(0, toPercentage(data.progressoAtual));
       const pace = Math.max(0, toPercentage(data.percentualMes));
-      const difference = actual - pace;
+      const visibleActual = Math.min(actual, 100);
+      const visiblePace = Math.min(pace, 100);
+      const track = document.getElementById("raceTrack");
 
-      updateRaceLane("actual", actual);
-      updateRaceLane("pace", pace);
       document.getElementById("pctNum").textContent = formatPercentage(actual);
-
-      const status = document.getElementById("raceStatus");
-      status.classList.remove("is-behind", "is-even");
-
-      if (Math.abs(difference) < 0.05) {
-        status.textContent = "No ritmo planejado";
-        status.classList.add("is-even");
-      } else if (difference > 0) {
-        status.textContent = `${numberFormatter.format(difference)} p.p. à frente do ritmo`;
-      } else {
-        status.textContent = `${numberFormatter.format(Math.abs(difference))} p.p. atrás do ritmo`;
-        status.classList.add("is-behind");
-      }
-    }
-
-    function updateRaceLane(prefix, percentage) {
-      const visiblePercentage = Math.min(percentage, 100);
-      const track = document.getElementById(`${prefix}Track`);
-
-      document.getElementById(`${prefix}Pct`).textContent = formatPercentage(percentage);
-      document.getElementById(`${prefix}Fill`).style.width = `${visiblePercentage}%`;
-      track.style.setProperty("--position", `${visiblePercentage}%`);
-      track.setAttribute("aria-valuenow", visiblePercentage.toFixed(1));
+      document.getElementById("actualPct").textContent = formatPercentage(actual);
+      document.getElementById("pacePct").textContent = formatPercentage(pace);
+      document.getElementById("actualFill").style.width = `${visibleActual}%`;
+      document.getElementById("paceFill").style.width = `${visiblePace}%`;
+      track.style.setProperty("--actual-position", `${visibleActual}%`);
+      track.style.setProperty("--pace-position", `${visiblePace}%`);
+      track.classList.toggle("is-on-pace", actual >= pace);
+      track.setAttribute("aria-valuenow", visibleActual.toFixed(1));
     }
 
     function renderGoals(items) {
@@ -1150,11 +1081,12 @@
           document.getElementById(id).textContent = "—";
         });
         document.getElementById("pctNum").textContent = "—";
-        updateRaceLane("actual", 0);
-        updateRaceLane("pace", 0);
+        document.getElementById("actualFill").style.width = "0%";
+        document.getElementById("paceFill").style.width = "0%";
+        document.getElementById("raceTrack").style.setProperty("--actual-position", "0%");
+        document.getElementById("raceTrack").style.setProperty("--pace-position", "0%");
         document.getElementById("actualPct").textContent = "—";
         document.getElementById("pacePct").textContent = "—";
-        document.getElementById("raceStatus").textContent = "Ritmo indisponível";
         showGoalsError();
         document.getElementById("lastUpdate").textContent = "Falha na última atualização";
       } finally {
